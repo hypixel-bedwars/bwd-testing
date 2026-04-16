@@ -7,7 +7,8 @@ import {
 } from "discord.js";
 import hypixelApi from "../../hypixel/hypixelApi";
 import MinecraftColor from "../../model/minecraftColor.model";
-import { generateMinecraftText } from "../../font/lib";
+import { generateMinecraftText, generatePolsuLikeLeaderboard } from "../../font/lib";
+import { HypixelPlayer } from "../../model/hypixel/player.hypixel";
 
 export default {
   data: new SlashCommandBuilder()
@@ -44,25 +45,23 @@ export default {
     const statLines: string[] = [];
     const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
     
+    const players: HypixelPlayer[] = [];
+    
     for (let i = 0; i < 10; i += 2) {
       const batch = leaders_array.slice(i, i + 2);
     
-      const players = await Promise.all(
+      const results = await Promise.all(
         batch.map((uuid) => hypixelApi.getPlayerData(uuid))
       );
     
-      players.forEach((player, j) => {
-        const index = i + j + 1;
-        const player_color = player?.monthlyRankColor
-        statLines.push(
-          `${MinecraftColor.GREEN}#${index} ${player?.tagString}${player?.displayname} ${MinecraftColor.DARK_GRAY}- ${player?.formattedstars}`
-        );
+      results.forEach((player) => {
+        if (player) players.push(player);
       });
     
       await sleep(1000);
     }
 
-    const image = await generateMinecraftText(statLines, true, 3);
+    const image = await generatePolsuLikeLeaderboard(players);
 
     await interaction.editReply({
       files: [

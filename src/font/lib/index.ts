@@ -1,4 +1,6 @@
+import { win32 } from "node:path";
 import { HypixelPlayer } from "../../model/hypixel/player.hypixel";
+import MinecraftColor from "../../model/minecraftColor.model";
 import { getFontSet, loadFontSets } from "./font-manager";
 import { iterateFormatted } from "./helpers";
 import BitmapGlyph from "./models/renderers/bitmap-glyph";
@@ -143,7 +145,33 @@ export async function generateMinecraftText(
 }
 
 export async function generatePolsuLikeLeaderboard(players: HypixelPlayer[]) {
+  await ensureFontSetsLoaded();
   
+  const background = 'assets/Leaderboard_page_1.png'
+  const bg = await Canvas.loadImage(background);
+  
+  const canvas = Canvas.createCanvas(bg.width, bg.height);
+  const context = canvas.getContext("2d");
+  
+  context.drawImage(bg, 0, 0);
+  
+  let y = 59
+  const scale = 3
+  
+  players.forEach((player, index) => {
+    const rank = index+1
+    drawMinecraftText(context, `${MinecraftColor.WHITE}#${rank}`, (54/scale), y/scale, scale)
+    
+    const username_with_rank = `${player.tagString} ${player.displayname}`
+    drawMinecraftText(context, username_with_rank, (150/scale), y/scale, scale)
+    
+    const stars = `${player.formattedstars}`
+    drawMinecraftText(context, stars, (700/scale), y/scale, scale)
+    
+    y+=50
+  })
+  
+  return canvas.toBuffer("image/png");
 }
 
 export { Canvas };
