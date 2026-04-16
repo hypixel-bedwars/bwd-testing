@@ -83,10 +83,9 @@ export async function create({
   const glyphs: Record<string, BitmapGlyph> = {};
   const imageWidth = image.width;
   const imageHeight = image.height;
-  const glyphWidth = imageWidth / chars[0].length;
-  const glyphHeight = imageHeight / chars.length;
-  const scale = height / glyphHeight;
-
+  const glyphWidth = Math.floor(imageWidth / chars[0].length);
+  const glyphHeight = Math.floor(imageHeight / chars.length);
+  
   for (let rowIndex = 0; rowIndex < chars.length; rowIndex++) {
     const codepoints = Array.from(chars[rowIndex]);
 
@@ -104,11 +103,15 @@ export async function create({
         index,
         rowIndex,
       );
+      const visualScale = height / glyphHeight;
+      const contentScale = height / actualWidth;
+      
+      const scale = Math.min(visualScale, contentScale * 0.9);
 
       glyphs[char] = {
         scale,
-        offsetX: index * glyphWidth,
-        offsetY: rowIndex * glyphHeight,
+        offsetX: Math.floor(index * glyphWidth),
+        offsetY: Math.floor(rowIndex * glyphHeight),
         width: glyphWidth,
         height: glyphHeight,
         advance: Math.trunc(0.5 + actualWidth * scale) + 1,
@@ -126,15 +129,18 @@ export async function create({
             canvasImage,
             offsetX,
             offsetY,
-            width,
-            height,
+            Math.floor(width),
+            Math.floor(height),
             0,
             0,
             width,
             height,
           );
+          
+          const scaledWidth = width * this.scale;
+          const scaledHeight = height * this.scale;
 
-          context.drawImage(bufferCanvas, x, y + (7 - ascent));
+          context.drawImage(bufferCanvas, x, y + (7 - ascent), scaledWidth, scaledHeight);
         },
       };
     }

@@ -1,3 +1,4 @@
+import { HypixelPlayer } from "../../model/hypixel/player.hypixel";
 import { getFontSet, loadFontSets } from "./font-manager";
 import { iterateFormatted } from "./helpers";
 import BitmapGlyph from "./models/renderers/bitmap-glyph";
@@ -139,6 +140,10 @@ export async function generateMinecraftText(
   });
 
   return canvas.toBuffer("image/png");
+}
+
+export async function generatePolsuLikeLeaderboard(players: HypixelPlayer[]) {
+  
 }
 
 export { Canvas };
