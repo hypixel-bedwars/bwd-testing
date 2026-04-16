@@ -6,6 +6,7 @@ import {
 	PermissionFlagsBits,
 } from "discord.js";
 import hypixelApi from "../../hypixel/hypixelApi";
+import MinecraftColor from "../../model/minecraftColor.model";
 
 export default {
 	data: new SlashCommandBuilder()
@@ -37,10 +38,23 @@ export default {
 			return interaction.editReply("Bedwars level leaderboard not found.");
 		}
 
-		const leaders_arrey = starLeaderboard.leaders.slice(0, 5);
+		const leaders_array = starLeaderboard.leaders.slice(0, 5);
 
-		leaders_arrey.forEach((leader_uuid) => {
-			const leader_stats = hypixelApi.getPlayerData(leader_uuid);
-		});
+		const statLines = await Promise.all(
+			leaders_array.slice(0, 10).map(async (uuid, index) => {
+				const player = await hypixelApi.getPlayerData(uuid);
+
+				const name = player?.displayname ?? "Unknown";
+				const stars = player?.stars ?? 0;
+
+				const color = stars >= 0 ? MinecraftColor.GREEN : MinecraftColor.RED;
+
+				return (
+					`${MinecraftColor.DARK_AQUA}#${index + 1} ${name} ` +
+					`${MinecraftColor.DARK_GRAY}- ` +
+					`${color}⭐ ${stars}`
+				);
+			}),
+		);
 	},
 };
