@@ -1,0 +1,4 @@
+.env
+.zed
+node_modules
+dist

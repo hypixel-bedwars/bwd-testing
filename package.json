@@ -1,0 +1,24 @@
+{
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.2"
+  },
+  "name": "bwd-testing",
+  "version": "1.0.0",
+  "description": "A Discord Bot used to test new ideas for BWD",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "nodemon --watch src --ext ts,json --exec ts-node src/index.ts",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "VA80",
+  "license": "MIT NON-AI License",
+  "dependencies": {
+    "canvas": "^3.2.3",
+    "discord.js": "^14.26.2",
+    "dotenv": "^17.4.1"
+  }
+}
