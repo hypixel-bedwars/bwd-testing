@@ -1,3 +1,5 @@
+import MinecraftColor from "../minecraftColor.model";
+
 export interface BedwarsStats {
   Experience: number;
   wins_bedwars: number;
@@ -28,7 +30,8 @@ export interface HypixelPlayer extends HypixelRankData {
   // computed fields
   tag?: RankFormat;
   tagString?: string;
-  stars?: number;
+	stars?: number;
+	formattedstars?: string;
 }
 
 export interface PlayerResponse {
@@ -199,13 +202,9 @@ export function replaceCustomColors(
   return newRank;
 }
 
-// ----------------------------
-
 export function formatTag(tag: RankFormat): string {
   return tag.map(([c, t]) => `§${c}${t}`).join("");
 }
-
-// ----------------------------
 
 export function attachTag(player: HypixelPlayer): HypixelPlayer {
   const tag = player.tag ?? calcTag(player);
@@ -216,8 +215,6 @@ export function attachTag(player: HypixelPlayer): HypixelPlayer {
     tagString: formatTag(tag),
   };
 }
-
-// ----------------------------
 
 export function attachStars(player: HypixelPlayer): HypixelPlayer {
   let xp = player.stats.Bedwars.Experience ?? 0;
@@ -245,7 +242,24 @@ export function attachStars(player: HypixelPlayer): HypixelPlayer {
   };
 }
 
-// ----------------------------
+export function formatStars(player: HypixelPlayer) {
+	const stars = player.stars ?? 0
+	const prestige = Math.trunc(stars / 100)
+
+	if (prestige == 0) {
+		return {
+			...player,
+			formattedstars: `${MinecraftColor.GRAY}${stars}`
+		}
+	} else if (prestige == 1) {
+		return {
+
+		}
+	}
+
+	// Gotta do this idk fucking 50 more times
+	// cant find a better way
+}
 
 export function attachAll(player: HypixelPlayer): HypixelPlayer {
   return attachStars(attachTag(player));
