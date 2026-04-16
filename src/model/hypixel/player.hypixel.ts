@@ -30,8 +30,8 @@ export interface HypixelPlayer extends HypixelRankData {
   // computed fields
   tag?: RankFormat;
   tagString?: string;
-	stars?: number;
-	formattedstars?: string;
+  stars?: number;
+  formattedstars?: string;
 }
 
 export interface PlayerResponse {
@@ -219,13 +219,7 @@ export function attachTag(player: HypixelPlayer): HypixelPlayer {
 export function attachStars(player: HypixelPlayer): HypixelPlayer {
   let xp = player.stats.Bedwars.Experience ?? 0;
 
-  const thresholds = [
-    500,
-    1000,
-    2000,
-    3500,
-    ...Array(95).fill(5000),
-  ];
+  const thresholds = [500, 1000, 2000, 3500, ...Array(95).fill(5000)];
 
   let stars = 0;
   let i = 0;
@@ -235,30 +229,92 @@ export function attachStars(player: HypixelPlayer): HypixelPlayer {
     i = (i + 1) % thresholds.length;
     stars++;
   }
+  
+  const formatted_stars = formatStars({
+    ...player,
+    stars: stars - 1,
+  });
 
   return {
     ...player,
-    stars: stars - 1, // Subtract 1 because the first star is at 0 XP, not 500 XP
+    stars: Math.max(0, stars - 1), // Subtract 1 because the first star is at 0 XP, not 500 XP
+    formattedstars: formatted_stars
   };
 }
 
+// All the prestiges below or 3000 were taken from some github
+// All the prestiges above 3000 were taken from (https://github.com/SampleSpaceDev/PIP/blob/master/index.js) gotta lobe that guy
+const prestigeFormats: Record<number, (level: number, d: string[]) => string> = {
+  0: (level) => `${MinecraftColor.GRAY}[${level}✫]`,
+  1: (level) => `${MinecraftColor.WHITE}[${level}✫]`,
+  2: (level) => `${MinecraftColor.GOLD}[${level}✫]`,
+  3: (level) => `${MinecraftColor.AQUA}[${level}✫]`,
+  4: (level) => `${MinecraftColor.DARK_GREEN}[${level}✫]`,
+  5: (level) => `${MinecraftColor.DARK_AQUA}[${level}✫]`,
+  6: (level) => `${MinecraftColor.DARK_RED}[${level}✫]`,
+  7: (level) => `${MinecraftColor.LIGHT_PURPLE}[${level}✫]`,
+  8: (level) => `${MinecraftColor.BLUE}[${level}✫]`,
+  9: (level) => `${MinecraftColor.DARK_PURPLE}[${level}✫]`,
+
+  10: (_, d) => `${MinecraftColor.RED}[${MinecraftColor.GOLD}${d[0]}${MinecraftColor.YELLOW}${d[1]}${MinecraftColor.GREEN}${d[2]}${MinecraftColor.AQUA}${d[3]}${MinecraftColor.LIGHT_PURPLE}✫${MinecraftColor.DARK_PURPLE}]`,
+
+  11: (level) => `${MinecraftColor.GRAY}[${MinecraftColor.WHITE}${level}${MinecraftColor.GRAY}✪]`,
+  12: (level) => `${MinecraftColor.GRAY}[${MinecraftColor.YELLOW}${level}${MinecraftColor.GOLD}✪${MinecraftColor.GRAY}]`,
+  13: (level) => `${MinecraftColor.GRAY}[${MinecraftColor.AQUA}${level}${MinecraftColor.DARK_AQUA}✪${MinecraftColor.GRAY}]`,
+  14: (level) => `${MinecraftColor.GRAY}[${MinecraftColor.GREEN}${level}${MinecraftColor.DARK_GREEN}✪${MinecraftColor.GRAY}]`,
+  15: (level) => `${MinecraftColor.GRAY}[${MinecraftColor.DARK_AQUA}${level}${MinecraftColor.BLUE}✪${MinecraftColor.GRAY}]`,
+  16: (level) => `${MinecraftColor.GRAY}[${MinecraftColor.RED}${level}${MinecraftColor.DARK_RED}✪${MinecraftColor.GRAY}]`,
+  17: (level) => `${MinecraftColor.GRAY}[${MinecraftColor.LIGHT_PURPLE}${level}${MinecraftColor.DARK_PURPLE}✪${MinecraftColor.GRAY}]`,
+  18: (level) => `${MinecraftColor.GRAY}[${MinecraftColor.BLUE}${level}${MinecraftColor.DARK_BLUE}✪${MinecraftColor.GRAY}]`,
+  19: (level) => `${MinecraftColor.GRAY}[${MinecraftColor.DARK_PURPLE}${level}${MinecraftColor.GRAY}✪${MinecraftColor.GRAY}]`,
+
+  20: (_, d) => `${MinecraftColor.DARK_GRAY}[${MinecraftColor.GRAY}${d[0]}${MinecraftColor.WHITE}${d[1]}${d[2]}${MinecraftColor.GRAY}${d[3]}✪${MinecraftColor.DARK_GRAY}]`,
+
+  21: (_, d) => `${MinecraftColor.WHITE}[${d[0]}${MinecraftColor.YELLOW}${d[1]}${d[2]}${MinecraftColor.GOLD}${d[3]}${MinecraftColor.BOLD}⚝${MinecraftColor.GOLD}]`,
+  22: (_, d) => `${MinecraftColor.GOLD}[${d[0]}${MinecraftColor.WHITE}${d[1]}${d[2]}${MinecraftColor.AQUA}${d[3]}${MinecraftColor.BOLD}⚝${MinecraftColor.AQUA}]`,
+  23: (_, d) => `${MinecraftColor.DARK_PURPLE}[${d[0]}${MinecraftColor.LIGHT_PURPLE}${d[1]}${d[2]}${MinecraftColor.GOLD}${d[3]}${MinecraftColor.YELLOW}${MinecraftColor.BOLD}⚝${MinecraftColor.YELLOW}]`,
+  24: (_, d) => `${MinecraftColor.AQUA}[${d[0]}${MinecraftColor.WHITE}${d[1]}${d[2]}${MinecraftColor.GRAY}${d[3]}${MinecraftColor.BOLD}⚝${MinecraftColor.DARK_GRAY}]`,
+  25: (_, d) => `${MinecraftColor.WHITE}[${d[0]}${MinecraftColor.GREEN}${d[1]}${d[2]}${MinecraftColor.DARK_GREEN}${d[3]}${MinecraftColor.BOLD}⚝${MinecraftColor.DARK_GREEN}]`,
+  26: (_, d) => `${MinecraftColor.DARK_RED}[${d[0]}${MinecraftColor.RED}${d[1]}${d[2]}${MinecraftColor.LIGHT_PURPLE}${d[3]}${MinecraftColor.BOLD}⚝${MinecraftColor.DARK_PURPLE}]`,
+  27: (_, d) => `${MinecraftColor.YELLOW}[${d[0]}${MinecraftColor.WHITE}${d[1]}${d[2]}${MinecraftColor.GRAY}${d[3]}${MinecraftColor.BOLD}⚝${MinecraftColor.GRAY}]`,
+  28: (_, d) => `${MinecraftColor.GREEN}[${d[0]}${MinecraftColor.DARK_GREEN}${d[1]}${d[2]}${MinecraftColor.GOLD}${d[3]}${MinecraftColor.BOLD}⚝${MinecraftColor.YELLOW}]`,
+  29: (_, d) => `${MinecraftColor.AQUA}[${d[0]}${MinecraftColor.DARK_AQUA}${d[1]}${d[2]}${MinecraftColor.BLUE}${d[3]}${MinecraftColor.BOLD}⚝${MinecraftColor.DARK_BLUE}]`,
+
+  30: (_, d) => `${MinecraftColor.YELLOW}[${d[0]}${MinecraftColor.GOLD}${d[1]}${d[2]}${MinecraftColor.RED}${d[3]}${MinecraftColor.BOLD}⚝${MinecraftColor.DARK_RED}]`,
+  
+  31: (_, d) => `${MinecraftColor.DARK_BLUE}[${MinecraftColor.DARK_BLUE}${d[0]}${MinecraftColor.DARK_AQUA}${d[1]}${MinecraftColor.DARK_AQUA}${d[2]}${MinecraftColor.GOLD}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.GOLD}]`,
+  32: (_, d) => `${MinecraftColor.RED}[${MinecraftColor.DARK_RED}${d[0]}${MinecraftColor.GRAY}${d[1]}${MinecraftColor.GRAY}${d[2]}${MinecraftColor.DARK_RED}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.RED}]`,
+  33: (_, d) => `${MinecraftColor.BLUE}[${MinecraftColor.BLUE}${d[0]}${MinecraftColor.BLUE}${d[1]}${MinecraftColor.LIGHT_PURPLE}${d[2]}${MinecraftColor.RED}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.DARK_RED}]`,
+  34: (_, d) => `${MinecraftColor.DARK_GREEN}[${MinecraftColor.GREEN}${d[0]}${MinecraftColor.LIGHT_PURPLE}${d[1]}${MinecraftColor.LIGHT_PURPLE}${d[2]}${MinecraftColor.DARK_PURPLE}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.DARK_GREEN}]`,
+  35: (_, d) => `${MinecraftColor.RED}[${MinecraftColor.RED}${d[0]}${MinecraftColor.DARK_RED}${d[1]}${MinecraftColor.DARK_RED}${d[2]}${MinecraftColor.DARK_GREEN}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.GREEN}]`,
+  36: (_, d) => `${MinecraftColor.GREEN}[${MinecraftColor.GREEN}${d[0]}${MinecraftColor.GREEN}${d[1]}${MinecraftColor.AQUA}${d[2]}${MinecraftColor.BLUE}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.DARK_BLUE}]`,
+  37: (_, d) => `${MinecraftColor.DARK_RED}[${MinecraftColor.DARK_RED}${d[0]}${MinecraftColor.RED}${d[1]}${MinecraftColor.RED}${d[2]}${MinecraftColor.AQUA}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.DARK_AQUA}]`,
+  38: (_, d) => `${MinecraftColor.DARK_BLUE}[${MinecraftColor.DARK_BLUE}${d[0]}${MinecraftColor.BLUE}${d[1]}${MinecraftColor.DARK_PURPLE}${d[2]}${MinecraftColor.DARK_PURPLE}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.LIGHT_PURPLE}]`,  
+  39: (_, d) => `${MinecraftColor.RED}[${MinecraftColor.RED}${d[0]}${MinecraftColor.GREEN}${d[1]}${MinecraftColor.GREEN}${d[2]}${MinecraftColor.DARK_GREEN}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.BLUE}]`,
+
+  40: (_, d) => `${MinecraftColor.DARK_PURPLE}[${MinecraftColor.DARK_PURPLE}${d[0]}${MinecraftColor.RED}${d[1]}${MinecraftColor.RED}${d[2]}${MinecraftColor.GOLD}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.YELLOW}]`,
+  
+  41: (_, d) => `${MinecraftColor.YELLOW}[${MinecraftColor.YELLOW}${d[0]}${MinecraftColor.GOLD}${d[1]}${MinecraftColor.RED}${d[2]}${MinecraftColor.LIGHT_PURPLE}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.DARK_PURPLE}]`,
+  42: (_, d) => `${MinecraftColor.DARK_BLUE}[${MinecraftColor.BLUE}${d[0]}${MinecraftColor.DARK_AQUA}${d[1]}${MinecraftColor.AQUA}${d[2]}${MinecraftColor.WHITE}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.GRAY}]`,
+  43: (_, d) => `${MinecraftColor.BLACK}[${MinecraftColor.DARK_PURPLE}${d[0]}${MinecraftColor.DARK_GRAY}${d[1]}${MinecraftColor.DARK_GRAY}${d[2]}${MinecraftColor.DARK_PURPLE}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.BLACK}]`,
+  44: (_, d) => `${MinecraftColor.DARK_GREEN}[${MinecraftColor.DARK_GREEN}${d[0]}${MinecraftColor.GREEN}${d[1]}${MinecraftColor.YELLOW}${d[2]}${MinecraftColor.GOLD}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.LIGHT_PURPLE}]`,
+  45: (_, d) => `${MinecraftColor.WHITE}[${MinecraftColor.WHITE}${d[0]}${MinecraftColor.AQUA}${d[1]}${MinecraftColor.AQUA}${d[2]}${MinecraftColor.DARK_AQUA}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.DARK_AQUA}]`,
+  46: (_, d) => `${MinecraftColor.DARK_AQUA}[${MinecraftColor.AQUA}${d[0]}${MinecraftColor.YELLOW}${d[1]}${MinecraftColor.YELLOW}${d[2]}${MinecraftColor.GOLD}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.DARK_PURPLE}]`,
+  47: (_, d) => `${MinecraftColor.WHITE}[${MinecraftColor.DARK_RED}${d[0]}${MinecraftColor.RED}${d[1]}${MinecraftColor.RED}${d[2]}${MinecraftColor.BLUE}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.DARK_BLUE}]`,
+  48: (_, d) => `${MinecraftColor.DARK_PURPLE}[${MinecraftColor.DARK_PURPLE}${d[0]}${MinecraftColor.RED}${d[1]}${MinecraftColor.GOLD}${d[2]}${MinecraftColor.YELLOW}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.AQUA}]`,
+  49: (_, d) => `${MinecraftColor.DARK_GREEN}[${MinecraftColor.GREEN}${d[0]}${MinecraftColor.WHITE}${d[1]}${MinecraftColor.WHITE}${d[2]}${MinecraftColor.GREEN}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.DARK_GREEN}]`,
+  
+  50: (_, d) => `${MinecraftColor.DARK_RED}[${MinecraftColor.DARK_RED}${d[0]}${MinecraftColor.DARK_PURPLE}${d[1]}${MinecraftColor.BLUE}${d[2]}${MinecraftColor.BLUE}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.BLACK}]`,
+};
+
 export function formatStars(player: HypixelPlayer) {
-	const stars = player.stars ?? 0
-	const prestige = Math.trunc(stars / 100)
+  const stars = player.stars ?? 0;
+  const prestige = Math.trunc(stars / 100);
+  const digits = stars.toString().padStart(4, "0").split("");
 
-	if (prestige == 0) {
-		return {
-			...player,
-			formattedstars: `${MinecraftColor.GRAY}${stars}`
-		}
-	} else if (prestige == 1) {
-		return {
+  const formatter = prestigeFormats[prestige] ?? prestigeFormats[50];
 
-		}
-	}
-
-	// Gotta do this idk fucking 50 more times
-	// cant find a better way
+  return formatter(stars, digits);
 }
 
 export function attachAll(player: HypixelPlayer): HypixelPlayer {
