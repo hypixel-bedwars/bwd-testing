@@ -144,34 +144,176 @@ export async function generateMinecraftText(
   return canvas.toBuffer("image/png");
 }
 
-export async function generatePolsuLikeLeaderboard(players: HypixelPlayer[]) {
+export async function generateStarsLeaderboard(players: HypixelPlayer[]) {
   await ensureFontSetsLoaded();
-  
-  const background = 'assets/Leaderboard_page_1.png'
+
+  const background = "assets/Leaderboard_page_1.png";
   const bg = await Canvas.loadImage(background);
-  
-  const canvas = Canvas.createCanvas(bg.width, bg.height);
-  const context = canvas.getContext("2d");
-  
-  context.drawImage(bg, 0, 0);
-  
-  let y = 59
-  const scale = 3
-  
-  players.forEach((player, index) => {
-    const rank = index+1
-    drawMinecraftText(context, `${MinecraftColor.WHITE}#${rank}`, (54/scale), y/scale, scale)
-    
-    const username_with_rank = `${player.tagString} ${player.displayname}`
-    drawMinecraftText(context, username_with_rank, (150/scale), y/scale, scale)
-    
-    const stars = `${player.formattedstars}`
-    drawMinecraftText(context, stars, (700/scale), y/scale, scale)
-    
-    y+=50
-  })
-  
-  return canvas.toBuffer("image/png");
+
+  const scale = 3;
+  const playersPerPage = 10;
+
+  const pages: Buffer[] = [];
+
+  for (let i = 0; i < players.length; i += playersPerPage) {
+    const chunk = players.slice(i, i + playersPerPage);
+
+    const canvas = Canvas.createCanvas(bg.width, bg.height);
+    const context = canvas.getContext("2d");
+
+    context.drawImage(bg, 0, 0);
+
+    let y = 59;
+
+    chunk.forEach((player, index) => {
+      const globalRank = i + index + 1;
+
+      drawMinecraftText(
+        context,
+        `${MinecraftColor.WHITE}#${globalRank}`,
+        54 / scale,
+        y / scale,
+        scale
+      );
+
+      const username_with_rank = `${player.tagString} ${player.displayname}`;
+      drawMinecraftText(
+        context,
+        username_with_rank,
+        150 / scale,
+        y / scale,
+        scale
+      );
+
+      drawMinecraftText(
+        context,
+        `${player.formattedstars}`,
+        700 / scale,
+        y / scale,
+        scale
+      );
+
+      y += 50;
+    });
+
+    pages.push(canvas.toBuffer("image/png"));
+  }
+
+  return pages;
 }
 
-export { Canvas };
+export async function generateWinsLeaderboard(players: HypixelPlayer[]) {
+  await ensureFontSetsLoaded();
+
+  const background = "assets/Wins_Leaderboard.png";
+  const bg = await Canvas.loadImage(background);
+
+  const scale = 3;
+  const playersPerPage = 10;
+
+  const pages: Buffer[] = [];
+
+  for (let i = 0; i < players.length; i += playersPerPage) {
+    const chunk = players.slice(i, i + playersPerPage);
+
+    const canvas = Canvas.createCanvas(bg.width, bg.height);
+    const context = canvas.getContext("2d");
+
+    context.drawImage(bg, 0, 0);
+
+    let y = 59;
+
+    chunk.forEach((player, index) => {
+      const globalRank = i + index + 1;
+
+      drawMinecraftText(
+        context,
+        `${MinecraftColor.WHITE}#${globalRank}`,
+        54 / scale,
+        y / scale,
+        scale
+      );
+
+      const username_with_rank = `${player.tagString} ${player.displayname}`;
+      drawMinecraftText(
+        context,
+        username_with_rank,
+        150 / scale,
+        y / scale,
+        scale
+      );
+
+      drawMinecraftText(
+        context,
+        `${MinecraftColor.WHITE}${player.stats.Bedwars.wins_bedwars}`,
+        700 / scale,
+        y / scale,
+        scale
+      );
+
+      y += 50;
+    });
+
+    pages.push(canvas.toBuffer("image/png"));
+  }
+
+  return pages;
+}
+
+export async function generateFkillsLeaderboard(players: HypixelPlayer[]) {
+  await ensureFontSetsLoaded();
+
+  const background = "assets/Fkills_leaderboard.png";
+  const bg = await Canvas.loadImage(background);
+
+  const scale = 3;
+  const playersPerPage = 10;
+
+  const pages: Buffer[] = [];
+
+  for (let i = 0; i < players.length; i += playersPerPage) {
+    const chunk = players.slice(i, i + playersPerPage);
+
+    const canvas = Canvas.createCanvas(bg.width, bg.height);
+    const context = canvas.getContext("2d");
+
+    context.drawImage(bg, 0, 0);
+
+    let y = 59;
+
+    chunk.forEach((player, index) => {
+      const globalRank = i + index + 1;
+
+      drawMinecraftText(
+        context,
+        `${MinecraftColor.WHITE}#${globalRank}`,
+        54 / scale,
+        y / scale,
+        scale
+      );
+
+      const username_with_rank = `${player.tagString} ${player.displayname}`;
+      drawMinecraftText(
+        context,
+        username_with_rank,
+        150 / scale,
+        y / scale,
+        scale
+      );
+
+      drawMinecraftText(
+        context,
+        `${MinecraftColor.WHITE}${player.stats.Bedwars.final_kills_bedwars}`,
+        700 / scale,
+        y / scale,
+        scale
+      );
+
+      y += 50;
+    });
+
+    pages.push(canvas.toBuffer("image/png"));
+  }
+
+  return pages;
+}
