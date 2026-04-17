@@ -71,7 +71,7 @@ export async function updateLeaderboards(client: Client) {
 
       const timestamp = Math.floor(Date.now() / 1000);
       await msg.edit({
-        content: `⏳ Updated <t:${timestamp}:R> (<t:${timestamp}:f>)`,
+        content: `<a:minecraft_clock:1494647774267048056> Updated <t:${timestamp}:R> (<t:${timestamp}:f>)`,
         embeds,
         files,
       });

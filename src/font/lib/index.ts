@@ -178,10 +178,13 @@ export async function generateStarsLeaderboard(players: HypixelPlayer[]) {
         rank_text = `${MinecraftColor.WHITE}#${globalRank}`;
       }
 
+      const centerX = 64 / scale;
+      const textWidth = measureMinecraftText(rank_text);
+      
       drawMinecraftText(
         context,
         rank_text,
-        54 / scale,
+        centerX - textWidth / 2,
         y / scale,
         scale
       );
@@ -246,10 +249,13 @@ export async function generateWinsLeaderboard(players: HypixelPlayer[]) {
         rank_text = `${MinecraftColor.WHITE}#${globalRank}`;
       }
 
+      const centerX = 64 / scale;
+      const textWidth = measureMinecraftText(rank_text);
+      
       drawMinecraftText(
         context,
         rank_text,
-        54 / scale,
+        centerX - textWidth / 2,
         y / scale,
         scale
       );
@@ -265,7 +271,7 @@ export async function generateWinsLeaderboard(players: HypixelPlayer[]) {
 
       drawMinecraftText(
         context,
-        `${MinecraftColor.WHITE}${player.stats.Bedwars.wins_bedwars}`,
+        `${MinecraftColor.WHITE}${new Intl.NumberFormat("en-US").format(player.stats.Bedwars.wins_bedwars)}`,
         700 / scale,
         y / scale,
         scale
@@ -314,10 +320,13 @@ export async function generateFkillsLeaderboard(players: HypixelPlayer[]) {
         rank_text = `${MinecraftColor.WHITE}#${globalRank}`;
       }
 
+      const centerX = 64 / scale;
+      const textWidth = measureMinecraftText(rank_text);
+      
       drawMinecraftText(
         context,
         rank_text,
-        54 / scale,
+        centerX - textWidth / 2,
         y / scale,
         scale
       );
@@ -333,7 +342,7 @@ export async function generateFkillsLeaderboard(players: HypixelPlayer[]) {
 
       drawMinecraftText(
         context,
-        `${MinecraftColor.WHITE}${player.stats.Bedwars.final_kills_bedwars}`,
+        `${MinecraftColor.WHITE}${new Intl.NumberFormat("en-US").format(player.stats.Bedwars.final_kills_bedwars)}`,
         700 / scale,
         y / scale,
         scale
