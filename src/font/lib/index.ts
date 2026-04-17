@@ -164,13 +164,23 @@ export async function generateStarsLeaderboard(players: HypixelPlayer[]) {
     context.drawImage(bg, 0, 0);
 
     let y = 59;
-
+    
+    let rank_text: string;
     chunk.forEach((player, index) => {
       const globalRank = i + index + 1;
+      if (globalRank == 1) {
+        rank_text = `${MinecraftColor.YELLOW}#${globalRank}`
+      } else if (globalRank == 2) {
+        rank_text = `${MinecraftColor.GRAY}#${globalRank}`;
+      } else if (globalRank == 3) {
+        rank_text = `${MinecraftColor.GOLD}#${globalRank}`;
+      } else {
+        rank_text = `${MinecraftColor.WHITE}#${globalRank}`;
+      }
 
       drawMinecraftText(
         context,
-        `${MinecraftColor.WHITE}#${globalRank}`,
+        rank_text,
         54 / scale,
         y / scale,
         scale
@@ -212,7 +222,8 @@ export async function generateWinsLeaderboard(players: HypixelPlayer[]) {
   const playersPerPage = 10;
 
   const pages: Buffer[] = [];
-
+  
+  let rank_text: string;
   for (let i = 0; i < players.length; i += playersPerPage) {
     const chunk = players.slice(i, i + playersPerPage);
 
@@ -225,10 +236,19 @@ export async function generateWinsLeaderboard(players: HypixelPlayer[]) {
 
     chunk.forEach((player, index) => {
       const globalRank = i + index + 1;
+      if (globalRank == 1) {
+        rank_text = `${MinecraftColor.YELLOW}#${globalRank}`
+      } else if (globalRank == 2) {
+        rank_text = `${MinecraftColor.GRAY}#${globalRank}`;
+      } else if (globalRank == 3) {
+        rank_text = `${MinecraftColor.GOLD}#${globalRank}`;
+      } else {
+        rank_text = `${MinecraftColor.WHITE}#${globalRank}`;
+      }
 
       drawMinecraftText(
         context,
-        `${MinecraftColor.WHITE}#${globalRank}`,
+        rank_text,
         54 / scale,
         y / scale,
         scale
@@ -270,7 +290,8 @@ export async function generateFkillsLeaderboard(players: HypixelPlayer[]) {
   const playersPerPage = 10;
 
   const pages: Buffer[] = [];
-
+  
+  let rank_text: string;
   for (let i = 0; i < players.length; i += playersPerPage) {
     const chunk = players.slice(i, i + playersPerPage);
 
@@ -283,10 +304,19 @@ export async function generateFkillsLeaderboard(players: HypixelPlayer[]) {
 
     chunk.forEach((player, index) => {
       const globalRank = i + index + 1;
+      if (globalRank == 1) {
+        rank_text = `${MinecraftColor.YELLOW}#${globalRank}`
+      } else if (globalRank == 2) {
+        rank_text = `${MinecraftColor.GRAY}#${globalRank}`;
+      } else if (globalRank == 3) {
+        rank_text = `${MinecraftColor.GOLD}#${globalRank}`;
+      } else {
+        rank_text = `${MinecraftColor.WHITE}#${globalRank}`;
+      }
 
       drawMinecraftText(
         context,
-        `${MinecraftColor.WHITE}#${globalRank}`,
+        rank_text,
         54 / scale,
         y / scale,
         scale
