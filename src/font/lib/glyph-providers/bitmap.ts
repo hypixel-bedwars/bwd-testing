@@ -85,7 +85,7 @@ export async function create({
   const imageHeight = image.height;
   const glyphWidth = Math.floor(imageWidth / chars[0].length);
   const glyphHeight = Math.floor(imageHeight / chars.length);
-  
+
   for (let rowIndex = 0; rowIndex < chars.length; rowIndex++) {
     const codepoints = Array.from(chars[rowIndex]);
 
@@ -105,7 +105,7 @@ export async function create({
       );
       const visualScale = height / glyphHeight;
       const contentScale = height / actualWidth;
-      
+
       const scale = Math.min(visualScale, contentScale * 0.9);
 
       glyphs[char] = {
@@ -116,6 +116,7 @@ export async function create({
         height: glyphHeight,
         advance: Math.trunc(0.5 + actualWidth * scale) + 1,
         ascent,
+        boldOffset: ["✫", "✪", "⚝", "✥"].includes(char) ? 0 : undefined,
         render(context, x, y, color) {
           const { offsetX, offsetY, width, height, ascent } = this;
           const bufferCanvas = Canvas.createCanvas(width, height);
@@ -136,11 +137,17 @@ export async function create({
             width,
             height,
           );
-          
+
           const scaledWidth = width * this.scale;
           const scaledHeight = height * this.scale;
 
-          context.drawImage(bufferCanvas, x, y + (7 - ascent), scaledWidth, scaledHeight);
+          context.drawImage(
+            bufferCanvas,
+            x,
+            y + (7 - ascent),
+            scaledWidth,
+            scaledHeight,
+          );
         },
       };
     }
