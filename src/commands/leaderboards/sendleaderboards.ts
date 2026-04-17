@@ -67,8 +67,10 @@ export default {
     const wins_leaderboard_channel = await client.channels.fetch(wins_leaderboard_channel_id);
     const fkills_leaderboard_channel = await client.channels.fetch(fkills_leaderboard_channel_id);
     
+    const timestamp = Math.floor(Date.now() / 1000);
     if (star_leaderboard_channel && star_leaderboard_channel.type == ChannelType.GuildText) {
       const star_leaderboard_message = await star_leaderboard_channel.send({
+        content: `⏳ Updated <t:${timestamp}:R>(<t:${timestamp}:f>)`,
         embeds: stars_leaderboard_embeds,
         files: star_files,
       });
@@ -79,6 +81,7 @@ export default {
     
     if (wins_leaderboard_channel && wins_leaderboard_channel.type == ChannelType.GuildText) {
       const wins_leaderboard_message = await wins_leaderboard_channel.send({
+        content: `⏳ Updated <t:${timestamp}:R>(<t:${timestamp}:f>)`,
         embeds: wins_leaderboard_embeds,
         files: wins_files,
       });
@@ -89,6 +92,7 @@ export default {
     
     if (fkills_leaderboard_channel && fkills_leaderboard_channel.type == ChannelType.GuildText) {
       const fkills_leaderboard_message = await fkills_leaderboard_channel.send({
+        content: `⏳ Updated <t:${timestamp}:R>(<t:${timestamp}:f>)`,
         embeds: fkills_leaderboard_embeds,
         files: fkills_files,
       });

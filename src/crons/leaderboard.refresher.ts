@@ -46,7 +46,7 @@ export async function updateLeaderboards(client: Client) {
 
   const leaderboards = await generateAllLeaderboards();
   if (!leaderboards) return;
-
+  
   for (const target of validTargets) {
     const { key, channel, messageId } = target;
 
@@ -69,7 +69,9 @@ export async function updateLeaderboards(client: Client) {
     try {
       const msg = await channel.messages.fetch(messageId);
 
+      const timestamp = Math.floor(Date.now() / 1000);
       await msg.edit({
+        content: `⏳ Updated <t:${timestamp}:R> (<t:${timestamp}:f>)`,
         embeds,
         files,
       });
@@ -85,8 +87,8 @@ export async function updateLeaderboards(client: Client) {
 
 export function startLeaderboardCron(client: Client) {
   // 🔧 CHANGE THIS VALUE WHEN YOU WANT
-  const schedule = "*/5 * * * *"; // every 5 minutes (testing)
-  // const schedule = "*/30 * * * *"; // every 30 minutes (production)
+  // const schedule = "*/5 * * * *"; // every 5 minutes (testing)
+  const schedule = "*/30 * * * *"; // every 30 minutes (production)
 
   const task = cron.schedule(
     schedule,
