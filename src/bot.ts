@@ -9,5 +9,5 @@ export default async function initializeBot(client: Client<boolean>) {
 
 	// Pass the client to the command loader so commands can access the bot client if needed
 	await commandLoader(path.join(__dirname, "commands"), client);
-	eventLoader(path.join(__dirname, "events"), client);
+  eventLoader(path.join(__dirname, "events"), client);
 }

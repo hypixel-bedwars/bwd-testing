@@ -31,7 +31,8 @@ export default {
 	},
 
 	async getPlayerData(playeruuid: string) {
-		try {
+    try {
+      console.log(`Fetching player data for ${playeruuid}...`);
 			const url = `https://api.hypixel.net/v2/player?key=${getHypixelToken()}&uuid=${playeruuid}`;
 
 			const response = await fetch(url);

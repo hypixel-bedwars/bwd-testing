@@ -1,6 +1,11 @@
-import { generateStarsLeaderboard } from "../font/lib";
+import { generateFkillsLeaderboard, generateStarsLeaderboard, generateWinsLeaderboard } from "../font/lib";
 import hypixelApi from "../hypixel/hypixelApi";
 import { HypixelPlayer } from "../model/hypixel/player.hypixel";
+import fs from "fs";
+import path from "path";
+import { LeaderboardKey, LeaderboardData } from "../model/leaderboardData.model"
+
+const FILE_PATH = path.join(process.cwd(), "data", "leaderboards.json");
 
 function _isPlayer(p: HypixelPlayer | undefined): p is HypixelPlayer {
   return p !== undefined;
@@ -34,6 +39,7 @@ export async function generateAllLeaderboards() {
   ];
   
   const uniqueUUIDs = [...new Set(allUUIDs)];
+  console.log(`Fetching ${uniqueUUIDs.length} players...`);
   const playerMap = new Map<string, HypixelPlayer>();
   const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
   
@@ -63,12 +69,52 @@ export async function generateAllLeaderboards() {
     .filter(_isPlayer);
   
   const star_leaderboard = await generateStarsLeaderboard(star_leaders);
-  const wins_leaderboard = await generateStarsLeaderboard(wins_leaders);
-  const fkills_leaderboard = await generateStarsLeaderboard(fkills_leaders);
+  const wins_leaderboard = await generateWinsLeaderboard(wins_leaders);
+  const fkills_leaderboard = await generateFkillsLeaderboard(fkills_leaders);
 
   return {
     star_leaderboard,
     wins_leaderboard,
     fkills_leaderboard,
   };
+}
+
+function readLeaderboardData(): LeaderboardData {
+  try {
+    if (!fs.existsSync(FILE_PATH)) return {};
+    return JSON.parse(fs.readFileSync(FILE_PATH, "utf-8"));
+  } catch {
+    console.log("Leaderboard data corrupted, resetting...");
+    return {};
+  }
+}
+
+function writeLeaderboardData(data: LeaderboardData) {
+  const dir = path.dirname(FILE_PATH);
+
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+
+  fs.writeFileSync(FILE_PATH, JSON.stringify(data, null, 2));
+}
+
+export function saveLeaderboardMessageId(
+  key: LeaderboardKey,
+  channelId: string,
+  messageId: string
+) {
+  const data = readLeaderboardData();
+
+  data[key] = {
+    channelId,
+    messageId,
+  };
+
+  writeLeaderboardData(data);
+}
+
+export function getLeaderboardMessageId(key: LeaderboardKey) {
+  const data = readLeaderboardData();
+  return data[key];
 }
