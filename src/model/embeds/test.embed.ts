@@ -51,7 +51,7 @@ export default function getTemplateEmbed() {
 		.setImage("https://i.imgur.com/yv9Z794.png") // Large bottom image
 		.setTimestamp() // Displays at the bottom
 		.setFooter({
-			text: "FOOTER TEXT SECTION • LIMIT 2048 CHARACTERS",
+			text: "FOOTER TEXT SECTION • LIMIT 2048 CHARACTERS ONLY!!",
 			iconURL: "https://i.imgur.com/AfFp7pu.png",
 		});
 
