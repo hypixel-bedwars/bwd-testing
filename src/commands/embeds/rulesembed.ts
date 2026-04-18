@@ -9,7 +9,7 @@ import {
 	MessageFlags,
 } from "discord.js";
 import path from "path";
-import { getRoleInformationFirstPage } from "../../model/embeds/rules.embed";
+import { getRoleInformationFirstPage } from "../../model/embeds/roles.embed";
 import { createDropdown } from "../../model/components/dropdown";
 import { RULE_CATEGORIES } from "../../model/menu.options";
 

@@ -5,7 +5,7 @@ import {
 	MessageFlags,
 } from "discord.js";
 import { getConfig } from "../utils/envloader";
-import { getCategoryContent } from "../model/embeds/rules.embed";
+import { getCategoryContent } from "../model/embeds/roles.embed";
 import { logger } from "../logger";
 
 export default {
