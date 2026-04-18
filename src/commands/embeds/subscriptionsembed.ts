@@ -1,3 +1,4 @@
+import { logger } from "../../logger";
 import {
   ChannelType,
   ChatInputCommandInteraction,
@@ -33,7 +34,7 @@ export default {
         content: "✅ Subscriptions embed sent successfully.",
       });
     } catch (error) {
-      console.error(error);
+      logger.error({err: error});
       await interaction.editReply({
         content: "❌ Failed to send subscriptions embed.",
       });

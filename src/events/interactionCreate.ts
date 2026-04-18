@@ -6,11 +6,11 @@ import {
 } from "discord.js";
 import { getConfig } from "../utils/envloader";
 import { getCategoryContent } from "../model/embeds/rules.embed";
+import { logger } from "../logger";
 
 export default {
 	name: "interactionCreate",
 	async execute(client: Client, interaction: Interaction) {
-		// Handles the components interaction
 		if (interaction.isStringSelectMenu()) {
 			if (interaction.customId === "role_select_menu") {
 				const selection = interaction.values[0];
@@ -37,9 +37,9 @@ export default {
 		try {
 			await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 		} catch (err) {
-			console.error(
+      logger.error(
+        {err: err},
 				"Failed to defer interaction — likely a duplicate or expired token:",
-				err,
 			);
 			return;
 		}
@@ -55,14 +55,14 @@ export default {
 
 		const commands = (client as any).commands;
 		if (!commands) {
-			console.warn("No commands collection found on client.");
+			logger.warn("No commands collection found on client.");
 			await interaction.editReply("Internal error: no commands collection.");
 			return;
 		}
 
 		const command = commands.get(interaction.commandName);
 		if (!command) {
-			console.error(
+			logger.error(
 				`No command matching ${interaction.commandName} was found.`,
 			);
 			await interaction.editReply(
@@ -74,13 +74,14 @@ export default {
 		try {
 			await command.execute(client, interaction as ChatInputCommandInteraction);
 		} catch (error) {
-			console.error(`Error executing ${interaction.commandName}:`, error);
+      logger.error({err: error}, `Error executing ${interaction.commandName}:`);
+			logger.discord(`⚠️ Command error in ${interaction.commandName}: ${error}`);
 			try {
 				await interaction.editReply(
 					"There was an error while executing this command.",
 				);
 			} catch (err2) {
-				console.error("Failed to send error reply to user:", err2);
+				logger.error({err: err2}, "Failed to send error reply to user:");
 			}
 		}
 	},

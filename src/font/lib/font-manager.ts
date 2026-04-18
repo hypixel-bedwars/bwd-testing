@@ -1,3 +1,4 @@
+import { logger } from "../../logger";
 import { createFontSet, initFontSet } from "./font-set";
 import { srcFontDir } from "./helpers";
 import GlyphProvider from "./models/glyph-provider";
@@ -19,16 +20,16 @@ enum Severity {
 
 function log(message: string, severity: Severity = Severity.VERBOSE) {
   if (severity === Severity.ERROR) {
-    console.error(`[font-manager][${severity}] ${message}`);
+    logger.error(`[font-manager][${severity}] ${message}`);
     return;
   }
 
   if (severity === Severity.WARNING) {
-    console.warn(`[font-manager][${severity}] ${message}`);
+    logger.warn(`[font-manager][${severity}] ${message}`);
     return;
   }
 
-  console.log(`[font-manager][${severity}] ${message}`);
+  logger.info(`[font-manager][${severity}] ${message}`);
 }
 
 if (typeof require.main == "undefined")

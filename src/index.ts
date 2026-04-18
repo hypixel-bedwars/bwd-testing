@@ -1,6 +1,7 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import initializeBot from "./bot";
 import { getConfig } from "./utils/envloader";
+import { logger } from "./logger";
 
 async function main() {
 	const client = new Client({
@@ -18,5 +19,7 @@ async function main() {
 }
 
 main().catch((error) => {
-	console.error("Error starting the bot:", error);
+  logger.error({ err: error }, "Critical failure during startup");
+  logger.discord("Critical failure during startup: " + error);
+  process.exit(1);
 });

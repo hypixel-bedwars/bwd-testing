@@ -1,3 +1,4 @@
+import { logger } from "../logger";
 import { REST, Routes, Client, Collection } from "discord.js";
 import fs from "fs";
 import path from "path";
@@ -52,17 +53,17 @@ export default async function commandLoader(
 
 			if (name) {
 				if (commandRegistry.has(name)) {
-					console.warn(
+					logger.warn(
 						`Duplicate command name \"${name}\" detected at ${filePath}; latest definition will be used.`,
 					);
 				}
 
 				commandRegistry.set(name, command);
 			} else {
-				console.warn(`Could not determine name for command at ${filePath}`);
+				logger.warn(`Could not determine name for command at ${filePath}`);
 			}
 		} else {
-			console.warn(
+			logger.warn(
 				`The command at ${filePath} is missing "data" or "execute".`,
 			);
 		}
@@ -73,7 +74,7 @@ export default async function commandLoader(
 	const commandsToDeploy = Array.from(commandRegistry.values());
 
 	try {
-		console.log(
+		logger.info(
 			`Started refreshing ${commandsToDeploy.length} application (/) commands.`,
 		);
 
@@ -82,10 +83,10 @@ export default async function commandLoader(
 			{ body: commandsToDeploy.map((cmd) => cmd.data.toJSON()) },
 		);
 
-		console.log(
+		logger.info(
 			`Successfully reloaded ${Array.isArray(data) ? data.length : 0} commands.`,
 		);
 	} catch (error) {
-		console.error(error);
+		logger.error({err: error});
 	}
 }

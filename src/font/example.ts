@@ -1,3 +1,4 @@
+import { logger } from "../logger";
 import { loadFontSets } from "./lib/font-manager";
 import { drawMinecraftText } from "./lib/index";
 import Canvas from "canvas";
@@ -40,5 +41,5 @@ const context = canvas.getContext("2d");
 
   await fs.writeFile("test-output.png", canvas.toBuffer());
 
-  console.log("✅ Test image saved as test-output.png");
+  logger.info("✅ Test image saved as test-output.png");
 })();

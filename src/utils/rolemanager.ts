@@ -1,3 +1,4 @@
+import { logger } from "../logger";
 import { Client } from "discord.js";
 import Roles from "../model/server.roles";
 import { getConfig } from "./envloader";
@@ -221,7 +222,7 @@ export async function initRoles(client: Client) {
 	const guild = await client.guilds.fetch(GuildId);
 
 	if (!guild) {
-		console.error("Could not find the target guild for roles!");
+		logger.error("Could not find the target guild for roles!");
 		return;
 	}
 
@@ -235,5 +236,5 @@ export async function initRoles(client: Client) {
 		ROLES[cleanName] = role.id;
 	});
 
-	console.log(`loaded ${Object.keys(ROLES).length} roles.`);
+	logger.info(`loaded ${Object.keys(ROLES).length} roles.`);
 }

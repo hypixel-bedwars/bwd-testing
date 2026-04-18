@@ -1,6 +1,7 @@
 import { getConfig } from "../utils/envloader";
 import { attachAll, PlayerResponse } from "../model/hypixel/player.hypixel"
 import { LeaderboardResponse } from "../model/hypixel/leaderboards.hypixel"
+import { logger } from "../logger";
 
 function getHypixelToken() {
 	return getConfig().HypixelToken;
@@ -25,14 +26,14 @@ export default {
 
 			return requestData.leaderboards["BEDWARS"] ?? null;
 		} catch (err) {
-			console.error("Failed to fetch Bedwars leaderboards:", err);
+			logger.error({err: err}, "Failed to fetch Bedwars leaderboards:");
 			return null;
 		}
 	},
 
 	async getPlayerData(playeruuid: string) {
     try {
-      console.log(`Fetching player data for ${playeruuid}...`);
+      logger.info(`Fetching player data for ${playeruuid}...`);
 			const url = `https://api.hypixel.net/v2/player?key=${getHypixelToken()}&uuid=${playeruuid}`;
 
 			const response = await fetch(url);
@@ -48,14 +49,14 @@ export default {
 			}
 
 			if (!responseData.player) {
-				console.warn("Player not found:", playeruuid);
+				logger.warn(`Player not found: ${playeruuid}`);
 				return null;
 			}
 
 			return attachAll(responseData.player);
 
 		} catch (err) {
-			console.error("Failed to fetch Player Data:", err);
+			logger.error({err: err}, "Failed to fetch Player Data:");
 			return null;
 		}
 	},

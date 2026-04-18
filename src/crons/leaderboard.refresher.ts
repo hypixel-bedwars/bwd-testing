@@ -3,6 +3,7 @@ import { Client, ChannelType } from "discord.js";
 import { generateAllLeaderboards, getLeaderboardMessageId } from "../utils/leaderboards";
 import { getConfig } from "../utils/envloader";
 import cron from "node-cron";
+import { logger } from "../logger";
 
 export async function updateLeaderboards(client: Client) {
   const config = getConfig();
@@ -35,12 +36,13 @@ export async function updateLeaderboards(client: Client) {
         messageId: stored.messageId,
       });
     } catch {
-      console.log(`${type.key} message missing`);
+      logger.info(`${type.key} message missing`);
+      logger.discord(`The leaderboard message for ${type.key} is missing`);
     }
   }
 
   if (validTargets.length === 0) {
-    console.log("No valid leaderboard messages found. Skipping update.");
+    logger.info("No valid leaderboard messages found. Skipping update.");
     return;
   }
 
@@ -76,13 +78,13 @@ export async function updateLeaderboards(client: Client) {
         files,
       });
 
-      console.log(`${key} leaderboard updated`);
+      logger.info(`${key} leaderboard updated`);
     } catch (err) {
-      console.log(`Failed to update ${key}`, err);
+      logger.error({err: err},`Failed to update ${key}`);
     }
   }
 
-  console.log("Leaderboards updated");
+  logger.info("Leaderboards updated");
 }
 
 export function startLeaderboardCron(client: Client) {
@@ -93,12 +95,12 @@ export function startLeaderboardCron(client: Client) {
   const task = cron.schedule(
     schedule,
     async () => {
-      console.log(`Leaderboards running (${schedule})`);
+      logger.info(`Leaderboards running (${schedule})`);
 
       try {
         await updateLeaderboards(client);
       } catch (err) {
-        console.error(err);
+        logger.error({err: err},`Failed to update leaderboards`);
       }
     },
     {

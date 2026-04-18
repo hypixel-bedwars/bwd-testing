@@ -6,11 +6,11 @@ let cachedConfig: AppConfig | null = null;
 export function initEnv(): void {
 	if (cachedConfig) return; // prevent re-init
 
-	const { CLIENT_ID, GUILD_ID, TOKEN, DEVE_ID, HYPIXEL_TOKEN, STARS_LEADERBOARD, WINS_LEADERBOARD, FKILLS_LEADERBOARD } = process.env;
+	const { CLIENT_ID, GUILD_ID, TOKEN, DEVE_ID, HYPIXEL_TOKEN, STARS_LEADERBOARD, WINS_LEADERBOARD, FKILLS_LEADERBOARD, DISCORD_LOG } = process.env;
 
-	if ( !CLIENT_ID || !GUILD_ID || !TOKEN || !DEVE_ID || !HYPIXEL_TOKEN || !STARS_LEADERBOARD || !WINS_LEADERBOARD || !FKILLS_LEADERBOARD ) {
+	if ( !CLIENT_ID || !GUILD_ID || !TOKEN || !DEVE_ID || !HYPIXEL_TOKEN || !STARS_LEADERBOARD || !WINS_LEADERBOARD || !FKILLS_LEADERBOARD || !DISCORD_LOG ) {
 		throw new Error(
-			"Missing required environment variables. Please set CLIENT_ID, GUILD_ID, and TOKEN.",
+			"Missing required environment variables. Please set all the channel IDs.",
 		);
 	}
 
@@ -23,6 +23,7 @@ export function initEnv(): void {
 		StarsLeaderboardChannelId: STARS_LEADERBOARD,
 		WinsLeaderboardChannelId: WINS_LEADERBOARD,
 		FkillsLeaderboardChannelId: FKILLS_LEADERBOARD,
+		DiscordLogChannelId: DISCORD_LOG,
 	};
 }
 

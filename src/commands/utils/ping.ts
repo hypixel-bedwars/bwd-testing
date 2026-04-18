@@ -1,3 +1,4 @@
+import { logger } from "../../logger";
 import {
 	ChatInputCommandInteraction,
 	SlashCommandBuilder,
@@ -19,7 +20,7 @@ export default {
 
 			await interaction.editReply(`Pong! 🏓 ${latency}ms`);
 		} catch (err) {
-			console.error("Ping command failed:", err);
+			logger.error({err}, "Ping command failed:");
 			await interaction.editReply(
 				"Something went wrong while calculating latency.",
 			);

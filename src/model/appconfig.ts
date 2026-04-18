@@ -11,4 +11,5 @@ export default interface AppConfig {
   StarsLeaderboardChannelId: string;
   WinsLeaderboardChannelId: string;
   FkillsLeaderboardChannelId: string;
+  DiscordLogChannelId: string;
 }

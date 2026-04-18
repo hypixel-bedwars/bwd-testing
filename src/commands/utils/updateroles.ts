@@ -1,3 +1,4 @@
+import { logger } from "../../logger";
 import {
 	ChatInputCommandInteraction,
 	SlashCommandBuilder,
@@ -27,9 +28,9 @@ export default {
 
 		const finalCodeBlock = `export let ROLES: IRoles = {\n${formattedForFile}\n};`;
 
-		console.log("\n--- COPY AND PASTE INTO ROLEMANAGER.TS ---");
-		console.log(finalCodeBlock);
-		console.log("-------------------------------------------\n");
+		logger.info("\n--- COPY AND PASTE INTO ROLEMANAGER.TS ---");
+		logger.info(finalCodeBlock);
+		logger.info("-------------------------------------------\n");
 
 		await interaction.editReply({
 			content: "Roles have been synced, Check the console",

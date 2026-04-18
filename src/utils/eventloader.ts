@@ -1,3 +1,4 @@
+import { logger } from "../logger";
 import { Client } from "discord.js";
 import fs from "fs";
 import path from "path";
@@ -28,12 +29,12 @@ export default function eventLoader(
         const event = imported.default ?? imported;
 
         if (!event.name || !event.execute) {
-            console.warn(`The event at ${file.name} is missing "name" or "execute".`);
+            logger.warn(`The event at ${file.name} is missing "name" or "execute".`);
             continue;
         }
 
         if (loadedEvents.has(event.name)) {
-            console.warn(`Skipping duplicate event registration for ${event.name} from ${file.name}.`);
+            logger.warn(`Skipping duplicate event registration for ${event.name} from ${file.name}.`);
             continue;
         }
 
@@ -45,6 +46,6 @@ export default function eventLoader(
 
         loadedEvents.add(event.name);
 
-        console.log(`Loaded event: ${event.name} from ${file.name}`);
+        logger.info(`Loaded event: ${event.name} from ${file.name}`);
     }
 }

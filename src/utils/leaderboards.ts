@@ -1,3 +1,4 @@
+import { logger } from "../logger";
 import { generateFkillsLeaderboard, generateStarsLeaderboard, generateWinsLeaderboard } from "../font/lib";
 import hypixelApi from "../hypixel/hypixelApi";
 import { HypixelPlayer } from "../model/hypixel/player.hypixel";
@@ -39,7 +40,7 @@ export async function generateAllLeaderboards() {
   ];
   
   const uniqueUUIDs = [...new Set(allUUIDs)];
-  console.log(`Fetching ${uniqueUUIDs.length} players...`);
+  logger.info(`Fetching ${uniqueUUIDs.length} players...`);
   const playerMap = new Map<string, HypixelPlayer>();
   const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
   
@@ -84,7 +85,7 @@ function readLeaderboardData(): LeaderboardData {
     if (!fs.existsSync(FILE_PATH)) return {};
     return JSON.parse(fs.readFileSync(FILE_PATH, "utf-8"));
   } catch {
-    console.log("Leaderboard data corrupted, resetting...");
+    logger.info("Leaderboard data corrupted, resetting...");
     return {};
   }
 }

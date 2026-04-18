@@ -1,5 +1,6 @@
 import { ChannelType, Client, Message } from "discord.js";
 import { getAutoResponderData } from "../utils/autoresponder.utils";
+import { logger } from "../logger";
 
 export default {
   name: "messageCreate",
@@ -16,7 +17,7 @@ export default {
         
         await message.channel.send(entry.response);
 
-        console.log(`autoresponded for ${entry.username}`);
+        logger.info(`autoresponded for ${entry.username}`);
         break;
       }
     }

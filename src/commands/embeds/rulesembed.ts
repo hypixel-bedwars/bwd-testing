@@ -1,3 +1,4 @@
+import { logger } from "../../logger";
 import {
 	ChatInputCommandInteraction,
 	SlashCommandBuilder,
@@ -52,7 +53,7 @@ export default {
 				content: "✅ Rules embed has been sent to this channel.",
 			});
 		} catch (error) {
-			console.error(error);
+			logger.error({err: error});
 			await interaction.editReply({
 				content: "Failed to send the rules embed. Check my permissions!",
 			});
