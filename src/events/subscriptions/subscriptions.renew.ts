@@ -21,9 +21,9 @@ export default {
     const baseInfo = `👤 **User:** <@${message.author.id}> (${message.author.id})\n🗓️ **Months:** ${totalMonthsSubscribed}`;
 
     let targetRoleId: string | null = null;
-    if (totalMonthsSubscribed === 1) targetRoleId = ROLES.LOYAL_LEGEND_I;
-    else if (totalMonthsSubscribed === 3) targetRoleId = ROLES.LOYAL_LEGEND_II;
-    else if (totalMonthsSubscribed === 6) targetRoleId = ROLES.LOYAL_LEGEND_III;
+    if (totalMonthsSubscribed >= 6) targetRoleId = ROLES.LOYAL_LEGEND_III;
+    else if (totalMonthsSubscribed >= 3) targetRoleId = ROLES.LOYAL_LEGEND_II;
+    else if (totalMonthsSubscribed >= 1) targetRoleId = ROLES.LOYAL_LEGEND_I;
 
     if (!targetRoleId) {
       return logger.discord(`🎊 **Subscriber Renewed!** (No role change)\n${baseInfo}`, logMeta);
