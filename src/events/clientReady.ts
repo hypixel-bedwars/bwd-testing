@@ -1,5 +1,6 @@
 import { Client } from "discord.js";
 import { startLeaderboardCron } from "../crons/leaderboard.refresher";
+import { startBedwarsStatusCron } from "../crons/bedwarsStatus.refresher";
 import { logger } from "../logger";
 import { getConfig } from "../utils/envloader";
 
@@ -10,7 +11,9 @@ export default {
     logger.info(`Logged in as ${client.user?.tag}`);
 
     try {
-      const channel = await client.channels.fetch(getConfig().DiscordLogChannelId);
+      const channel = await client.channels.fetch(
+        getConfig().DiscordLogChannelId,
+      );
 
       if (!channel) {
         logger.error("Failed to fetch logging channel");
@@ -20,7 +23,7 @@ export default {
       if (!channel.isTextBased()) {
         logger.error(
           { type: channel.type },
-          "Logging channel is not text-based"
+          "Logging channel is not text-based",
         );
         return;
       }
@@ -33,5 +36,6 @@ export default {
     }
 
     startLeaderboardCron(client);
+    startBedwarsStatusCron(client);
   },
 };

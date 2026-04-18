@@ -307,7 +307,7 @@ const prestigeFormats: Record<number, (level: number, d: string[]) => string> = 
   50: (_, d) => `${MinecraftColor.DARK_RED}[${MinecraftColor.DARK_RED}${d[0]}${MinecraftColor.DARK_PURPLE}${d[1]}${MinecraftColor.BLUE}${d[2]}${MinecraftColor.BLUE}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.BLACK}]`,
 };
 
-  export function formatStars(player: HypixelPlayer) {
+export function formatStars(player: HypixelPlayer) {
   const stars = player.stars ?? 0;
   const prestige = Math.trunc(stars / 100);
   const digits = stars.toString().padStart(4, "0").split("");

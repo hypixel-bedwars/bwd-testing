@@ -11,5 +11,6 @@ export default interface AppConfig {
   StarsLeaderboardChannelId: string;
   WinsLeaderboardChannelId: string;
   FkillsLeaderboardChannelId: string;
+  BedwarsStatusChannelId: string;
   DiscordLogChannelId: string;
 }
