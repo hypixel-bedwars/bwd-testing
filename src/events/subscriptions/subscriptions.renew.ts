@@ -9,7 +9,7 @@ export default {
 
     const { tierName, totalMonthsSubscribed, isRenewal } = message.roleSubscriptionData;
 
-    // 1. Prepare metadata
+    // Prepare metadata
     const logMeta: any = {
       user: message.author.tag,
       userId: message.author.id,
@@ -55,7 +55,6 @@ export default {
       return logger.discord(`**Sub Error: Hierarchy Blocked**\n${baseInfo}`, logMeta);
     }
 
-    // 4. Execution
     try {
       if (message.member.roles.cache.has(targetRoleId)) {
         return logger.discord(`🎊 **Subscriber Renewed!** (Role already owned)\n${baseInfo}`, logMeta);
