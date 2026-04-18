@@ -282,7 +282,7 @@ const prestigeFormats: Record<number, (level: number, d: string[]) => string> = 
 
   30: (_, d) => `${MinecraftColor.YELLOW}[${d[0]}${MinecraftColor.GOLD}${d[1]}${d[2]}${MinecraftColor.RED}${d[3]}${MinecraftColor.BOLD}⚝${MinecraftColor.DARK_RED}]`,
   
-  31: (_, d) => `${MinecraftColor.BLUE}[${MinecraftColor.DARK_BLUE}${d[0]}${MinecraftColor.DARK_AQUA}${d[1]}${MinecraftColor.DARK_AQUA}${d[2]}${MinecraftColor.GOLD}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.YELLOW}]`,
+  31: (_, d) => `${MinecraftColor.BLUE}[${d[0]}${MinecraftColor.DARK_AQUA}${d[1]}${MinecraftColor.DARK_AQUA}${d[2]}${MinecraftColor.GOLD}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.YELLOW}]`,
   32: (_, d) => `${MinecraftColor.RED}[${MinecraftColor.DARK_RED}${d[0]}${MinecraftColor.GRAY}${d[1]}${MinecraftColor.GRAY}${d[2]}${MinecraftColor.DARK_RED}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.RED}]`,
   33: (_, d) => `${MinecraftColor.BLUE}[${MinecraftColor.BLUE}${d[0]}${MinecraftColor.BLUE}${d[1]}${MinecraftColor.LIGHT_PURPLE}${d[2]}${MinecraftColor.RED}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.DARK_RED}]`,
   34: (_, d) => `${MinecraftColor.DARK_GREEN}[${MinecraftColor.GREEN}${d[0]}${MinecraftColor.LIGHT_PURPLE}${d[1]}${MinecraftColor.LIGHT_PURPLE}${d[2]}${MinecraftColor.DARK_PURPLE}${d[3]}${MinecraftColor.BOLD}✥${MinecraftColor.DARK_GREEN}]`,
