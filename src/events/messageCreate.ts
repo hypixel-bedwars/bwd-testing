@@ -8,6 +8,7 @@ import subscriptionHandler from "./subscriptions/subscriptions.renew"; // Adjust
 export default {
   name: "messageCreate",
   async execute(client: Client, message: Message) {
+    // Testing for subscription events
     if (
       message.content === "!testsub new" &&
       message.author.id === "795526316832849932"

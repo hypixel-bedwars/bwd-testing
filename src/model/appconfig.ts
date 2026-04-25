@@ -13,4 +13,6 @@ export default interface AppConfig {
   FkillsLeaderboardChannelId: string;
   BedwarsStatusChannelId: string;
   DiscordLogChannelId: string;
+  
+  TicketsCategoryId: string;
 }
