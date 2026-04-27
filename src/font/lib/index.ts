@@ -4,7 +4,7 @@ import MinecraftColor from "../../model/minecraftColor.model";
 import { getFontSet, loadFontSets } from "./font-manager";
 import { iterateFormatted } from "./helpers";
 import BitmapGlyph from "./models/renderers/bitmap-glyph";
-import Canvas, { CanvasRenderingContext2D } from "canvas";
+import Canvas, { CanvasRenderingContext2D } from "@napi-rs/canvas/node-canvas";
 
 const DEFAULT_SCALE = 2;
 const DEFAULT_LINE_HEIGHT = 10;

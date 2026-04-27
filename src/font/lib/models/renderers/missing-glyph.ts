@@ -1,5 +1,5 @@
 import Renderer from "../renderer";
-import { Image } from "canvas";
+import { Image } from "@napi-rs/canvas/node-canvas";
 
 export type MissingGlyph = {
   width: number;

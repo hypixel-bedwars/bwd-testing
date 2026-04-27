@@ -83,10 +83,9 @@ const responses = [
     "Staff will be here in a moment to assist with your roles. To speed things up, please provide your **Minecraft IGN** and a screenshot of your `/verify` message if applicable. Guide: https://support.hypixel.net/hc/en-us/articles/360019647059-Linking-Your-Minecraft-Account-to-Hypixel-net",
     
     // Discord-Specific: Member Reporting
-    "Thank you for the report. A Discord moderator will be here shortly. Please provide the **User ID** of the person you are reporting and **screenshots of the incident** so we can take immediate action.",
-    "Thank you for the report. A Discord moderator will be here shortly. Please provide the **User ID** of the person you are reporting and **screenshots of the incident** so we can take immediate action.",
-    "Thank you for the report. A Discord moderator will be here shortly. Please provide the **User ID** of the person you are reporting and **screenshots of the incident** so we can take immediate action.",
-    
+    "Thank you for the report. A Discord moderator will be here shortly. Please provide the following if not already**User ID** of the person you are reporting and **screenshots of the incident** so we can take immediate action.",
+    "Thank you for the report. A Discord moderator will be here shortly. Please provide the following if not already**User ID** of the person you are reporting and **screenshots of the incident** so we can take immediate action.",
+    "Thank you for the report. A Discord moderator will be here shortly. Please provide the following if not already**User ID** of the person you are reporting and **screenshots of the incident** so we can take immediate action.",
     // Hacked Account Responses 
     "I'm sorry to hear about your account. A staff member will be with you shortly to help secure your Discord profile. **In the meantime, please provide: 1. Your old IGN, 2. Your new IGN, and 3. The Discord ID of the compromised account.** While we wait, please contact official support: https://support.hypixel.net/hc/en-us/requests/new",
     "I'm sorry to hear about your account. A staff member will be with you shortly to help secure your Discord profile. **In the meantime, please provide: 1. Your old IGN, 2. Your new IGN, and 3. The Discord ID of the compromised account.** While we wait, please contact official support: https://support.hypixel.net/hc/en-us/requests/new",
@@ -99,6 +98,7 @@ const responses = [
     "Thank you for bringing this to our attention. We have a zero-tolerance policy for slurs and toxicity. A moderator will be with you as soon as possible. **In the meantime, please provide: 1. The User ID of the offender, 2. Which VC this happened in, and 3. Any recordings or names of witnesses who were present.**"
 ]
 
+const defaultResponse = "Thanks for reaching out — a staff member will review your ticket shortly.\nIn the meantime, please provide as much detail as possible (usernames, timestamps, screenshots, etc.) so we can assist you faster.\n(Note: We are an unofficial community-run server and cannot assist with official Hypixel bans or account recovery. For those issues, please contact official support: https://support.hypixel.net/hc/en-us/requests/new)";
 
 export async function initTicketAutomator() {
   logger.info("Initializing ticket automator...");
@@ -117,7 +117,7 @@ export async function initTicketAutomator() {
 export async function getTicketResponse(input: string): Promise<string> {
   if (!embedder) {
     logger.discord("Ticket automator not initialized yet.");
-    return "A staff member will be with you soon.";
+    return defaultResponse;
   }
 
   const query = await embedder(input, { pooling: 'mean', normalize: true });
@@ -135,8 +135,8 @@ export async function getTicketResponse(input: string): Promise<string> {
   }
   
   // Adjust the threshold as needed based on testing.
-  if (bestScore < 0.5) {
-    return "A staff member will be with you soon.";
+  if (bestScore < 0.55) {
+    return defaultResponse;
   }
 
   return responses[bestIdx];

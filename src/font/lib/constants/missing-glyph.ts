@@ -1,5 +1,5 @@
 import MissingGlyph from "../models/renderers/missing-glyph";
-import canvas from "canvas";
+import canvas from "@napi-rs/canvas/node-canvas";
 
 export const MISSING_GLYPH: MissingGlyph = {
   width: 5,

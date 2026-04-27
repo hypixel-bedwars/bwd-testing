@@ -1,7 +1,7 @@
 import { srcFontDir } from "../helpers";
 import Provider from "../models/provider";
 import { BitmapGlyph } from "../models/renderers/bitmap-glyph";
-import Canvas from "canvas";
+import Canvas from "@napi-rs/canvas/node-canvas";
 import fs from "fs/promises";
 import path from "path";
 import { PNG } from "pngjs";

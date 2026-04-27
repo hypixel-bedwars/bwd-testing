@@ -1,8 +1,4 @@
-import {
-  CanvasGradient,
-  CanvasPattern,
-  CanvasRenderingContext2D,
-} from "canvas";
+import { CanvasRenderingContext2D } from "@napi-rs/canvas/node-canvas";
 
 export interface Renderer {
   empty?: boolean;
@@ -10,7 +6,7 @@ export interface Renderer {
     context: CanvasRenderingContext2D,
     x: number,
     y: number,
-    color: string | CanvasGradient | CanvasPattern,
+    color: CanvasRenderingContext2D["fillStyle"],
   ): void;
 }
 export default Renderer;
