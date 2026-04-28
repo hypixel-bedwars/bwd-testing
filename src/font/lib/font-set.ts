@@ -15,7 +15,7 @@ export function createFontSet<T extends Renderer>(
       }
 
       for (const provider of providers) {
-        let glyph = provider.getGlyph(char);
+        const glyph = provider.getGlyph(char);
 
         if (glyph) {
           return glyph;

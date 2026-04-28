@@ -7,7 +7,7 @@ export function getGuildGlassRoles(client: Client) {
 
   if (!guild) return [];
 
-  let roles = guild.roles.cache
+  const roles = guild.roles.cache
     .filter((role) => role.name.toLowerCase().includes("glass"))
     .map((role) => role);
   

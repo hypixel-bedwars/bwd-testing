@@ -1,4 +1,3 @@
-import { win32 } from "node:path";
 import { HypixelPlayer } from "../../model/hypixel/player.hypixel";
 import MinecraftColor from "../../model/minecraftColor.model";
 import { getFontSet, loadFontSets } from "./font-manager";

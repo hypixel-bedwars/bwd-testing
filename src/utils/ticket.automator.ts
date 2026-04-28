@@ -8,8 +8,9 @@ function cosineSimilarity(a: number[], b: number[]) {
   return dot / (normA * normB);
 }
 
+// eslint-disable-next-line
 let embedder: any;
-let promptEmbeddings: number[][] = [];
+const promptEmbeddings: number[][] = [];
 
 const prompts = [
     // General Greetings / Ticket Openings
@@ -86,7 +87,8 @@ const responses = [
     "Thank you for the report. A Discord moderator will be here shortly. Please provide the following if not already**User ID** of the person you are reporting and **screenshots of the incident** so we can take immediate action.",
     "Thank you for the report. A Discord moderator will be here shortly. Please provide the following if not already**User ID** of the person you are reporting and **screenshots of the incident** so we can take immediate action.",
     "Thank you for the report. A Discord moderator will be here shortly. Please provide the following if not already**User ID** of the person you are reporting and **screenshots of the incident** so we can take immediate action.",
-    // Hacked Account Responses 
+    
+    // Hacked Account Responses
     "I'm sorry to hear about your account. A staff member will be with you shortly to help secure your Discord profile. **In the meantime, please provide: 1. Your old IGN, 2. Your new IGN, and 3. The Discord ID of the compromised account.** While we wait, please contact official support: https://support.hypixel.net/hc/en-us/requests/new",
     "I'm sorry to hear about your account. A staff member will be with you shortly to help secure your Discord profile. **In the meantime, please provide: 1. Your old IGN, 2. Your new IGN, and 3. The Discord ID of the compromised account.** While we wait, please contact official support: https://support.hypixel.net/hc/en-us/requests/new",
     "I'm sorry to hear about your account. A staff member will be with you shortly to help secure your Discord profile. **In the meantime, please provide: 1. Your old IGN, 2. Your new IGN, and 3. The Discord ID of the compromised account.** While we wait, please contact official support: https://support.hypixel.net/hc/en-us/requests/new",

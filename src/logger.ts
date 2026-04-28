@@ -1,7 +1,7 @@
 import pino from "pino";
 import { TextBasedChannel, EmbedBuilder } from "discord.js";
 
-let discordChannel: any = null; 
+let discordChannel: TextBasedChannel | null = null;
 
 const base = pino({
   level: process.env.NODE_ENV === "production" ? "info" : "debug",
@@ -19,7 +19,7 @@ export const logger = Object.assign(base, {
     discordChannel = channel;
   },
 
-  async discord(message: string, meta?: any) {
+  async discord(message: string, meta?: Record<string, unknown>) {
     base.info(meta, message);
   
     if (!discordChannel || !discordChannel.isSendable()) return;

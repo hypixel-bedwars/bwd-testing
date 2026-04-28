@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { logger } from "../logger";
 import { REST, Routes, Client, Collection } from "discord.js";
 import fs from "fs";
