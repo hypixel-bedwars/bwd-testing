@@ -15,4 +15,7 @@ export default interface AppConfig {
   DiscordLogChannelId: string;
   
   TicketsCategoryId: string;
+
+  // Partner role selection menu
+  PartnerUniversalRoleId: string;
 }

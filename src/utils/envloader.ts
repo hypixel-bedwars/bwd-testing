@@ -18,6 +18,7 @@ export function initEnv(): void {
     BEDWARS_STATUS,
     DISCORD_LOG,
     TICKETS_CATEGORY,
+    PARTNER_UNIVERSAL_ROLE,
   } = process.env;
 
   if (
@@ -31,7 +32,8 @@ export function initEnv(): void {
     !FKILLS_LEADERBOARD ||
     !BEDWARS_STATUS ||
     !DISCORD_LOG ||
-    !TICKETS_CATEGORY
+    !TICKETS_CATEGORY ||
+    !PARTNER_UNIVERSAL_ROLE
   ) {
     throw new Error(
       "Missing required environment variables. Please set all the channel IDs.",
@@ -50,6 +52,7 @@ export function initEnv(): void {
     BedwarsStatusChannelId: BEDWARS_STATUS,
     DiscordLogChannelId: DISCORD_LOG,
     TicketsCategoryId: TICKETS_CATEGORY,
+    PartnerUniversalRoleId: PARTNER_UNIVERSAL_ROLE,
   };
 }
 

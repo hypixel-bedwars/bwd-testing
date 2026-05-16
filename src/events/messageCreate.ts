@@ -31,7 +31,7 @@ export default {
 
     if (message.author.bot || !message.guild) return;
 
-    const data = getAutoResponderData();
+    const data = await getAutoResponderData();
     const content = message.content.toLowerCase();
 
     for (const entry of Object.values(data)) {

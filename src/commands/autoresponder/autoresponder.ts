@@ -7,7 +7,7 @@ import {
 
 import {
   addOrUpdateAutoResponder,
-  removeAutoResponseUsername,
+  removeAutoResponderById,
 } from "../../utils/autoresponder.utils";
 
 function extractUsername(nickname: string): string | null {
@@ -56,54 +56,65 @@ export default {
 
     const member = interaction.options.getMember("member");
 
-    if (!member || !("nickname" in member)) {
+    if (!member || !("nickname" in member) || !("user" in member)) {
       return interaction.editReply({
         content: "❌ Could not resolve member.",
-      });
-    }
-
-    const nickname = member.nickname;
-
-    if (!nickname) {
-      return interaction.editReply({
-        content: "This member does not have a nickname set.",
-      });
-    }
-
-    const username = extractUsername(nickname);
-
-    if (!username) {
-      return interaction.editReply({
-        content:
-          "Invalid nickname format. Expected something like `[69420 ✞] VA80`.",
       });
     }
 
     const userId = member.user.id;
 
     if (subcommand === "new") {
+      const nickname = member.nickname;
+
+      if (!nickname) {
+        return interaction.editReply({
+          content: "❌ This member does not have a nickname set.",
+        });
+      }
+
+      const username = extractUsername(nickname);
+
+      if (!username) {
+        return interaction.editReply({
+          content:
+            "❌ Invalid nickname format. Expected something like `[69420 ✞] VA80`.",
+        });
+      }
+
       const response = interaction.options.getString("response", true);
 
-      const result = addOrUpdateAutoResponder(userId, username, response);
+      const result = await addOrUpdateAutoResponder(userId, username, response);
 
       if (!result.success) {
         return interaction.editReply({
-          content: `Username **${username}** already exists.`,
+          content:
+            result.reason === "USERNAME_EXISTS"
+              ? `❌ Username **${username}** is already registered to a different user.`
+              : `❌ Failed to set auto responder for **${username}**.`,
         });
       }
 
       return interaction.editReply({
-        content: `Auto responder set for **${username}**`,
+        content: `✅ Auto responder set for **${username}**`,
       });
     }
 
     if (subcommand === "remove") {
-      const success = removeAutoResponseUsername(username);
+      const success = await removeAutoResponderById(userId);
+
+      const username = (() => {
+        const nickname = member.nickname;
+        if (!nickname) return null;
+        return extractUsername(nickname);
+      })();
 
       return interaction.editReply({
         content: success
-          ? `Removed auto responder for **${username}**`
-          : `No entry found for **${username}** or there was error`,
+          ? username
+            ? `✅ Removed auto responder for **${username}**`
+            : `✅ Removed auto responder for <@${userId}>`
+          : `❌ No auto responder entry found for <@${userId}>.`,
       });
     }
   },

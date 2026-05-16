@@ -121,12 +121,12 @@ export default {
         flags: MessageFlags.IsComponentsV2,
       });
 
-      writeBedwarsStatusData({ channelId, messageId: message.id });
+      await writeBedwarsStatusData({ channelId, messageId: message.id });
       return interaction.editReply({ content: "Status interface deployed." });
     }
 
     if (sub === "update") {
-      const data = readBedwarsStatusData();
+      const data = await readBedwarsStatusData();
       if (!data)
         return interaction.editReply({ content: "No active status found." });
 
@@ -156,7 +156,7 @@ export default {
     }
 
     if (sub === "remove") {
-      const data = readBedwarsStatusData();
+      const data = await readBedwarsStatusData();
       if (!data) return interaction.editReply({ content: "Nothing to clear." });
 
       const channel = await client.channels.fetch(data.channelId);
@@ -169,7 +169,7 @@ export default {
         }
       }
 
-      clearBedwarsStatusData();
+      await clearBedwarsStatusData();
       return interaction.editReply({ content: "Status interface removed." });
     }
   },
