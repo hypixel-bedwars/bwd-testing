@@ -3,7 +3,7 @@ import Provider from "./models/provider";
 import Renderer from "./models/renderer";
 import MissingGlyph from "./models/renderers/missing-glyph";
 import SpaceGlyph from "./models/renderers/space-glyph";
-import Canvas from "canvas";
+import Canvas from "@napi-rs/canvas/node-canvas";
 
 export function createFontSet<T extends Renderer>(
   providers: Provider<T>[],
@@ -15,7 +15,7 @@ export function createFontSet<T extends Renderer>(
       }
 
       for (const provider of providers) {
-        let glyph = provider.getGlyph(char);
+        const glyph = provider.getGlyph(char);
 
         if (glyph) {
           return glyph;

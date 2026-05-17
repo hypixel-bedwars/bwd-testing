@@ -23,10 +23,10 @@ export default {
   execute: async (client: Client, interaction: ChatInputCommandInteraction) => {
     const type = interaction.options.getString("type", true) as LeaderboardKey;
 
-    const leaderboard_data = getLeaderboardMessageId(type);
+    const leaderboard_data = await getLeaderboardMessageId(type);
 
     if (!leaderboard_data) {
-      return interaction.reply({ content: "Leaderboard not found", ephemeral: true });
+      return interaction.editReply({ content: "Leaderboard not found" });
     }
 
     const { channelId, messageId } = leaderboard_data;

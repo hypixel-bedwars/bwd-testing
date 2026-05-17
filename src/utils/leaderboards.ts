@@ -1,12 +1,15 @@
 import { logger } from "../logger";
-import { generateFkillsLeaderboard, generateStarsLeaderboard, generateWinsLeaderboard } from "../font/lib";
+import {
+  generateFkillsLeaderboard,
+  generateStarsLeaderboard,
+  generateWinsLeaderboard,
+} from "../font/lib";
 import hypixelApi from "../hypixel/hypixelApi";
 import { HypixelPlayer } from "../model/hypixel/player.hypixel";
-import fs from "fs";
-import path from "path";
-import { LeaderboardKey, LeaderboardData } from "../model/leaderboardData.model"
+import { LeaderboardKey, LeaderboardData } from "../model/leaderboardData.model";
+import { readData, writeData } from "./dataReader";
 
-const FILE_PATH = path.join(process.cwd(), "data", "leaderboards.json");
+const STORE_KEY = "leaderboards";
 
 function _isPlayer(p: HypixelPlayer | undefined): p is HypixelPlayer {
   return p !== undefined;
@@ -80,42 +83,26 @@ export async function generateAllLeaderboards() {
   };
 }
 
-function readLeaderboardData(): LeaderboardData {
-  try {
-    if (!fs.existsSync(FILE_PATH)) return {};
-    return JSON.parse(fs.readFileSync(FILE_PATH, "utf-8"));
-  } catch {
-    logger.info("Leaderboard data corrupted, resetting...");
-    return {};
-  }
+async function readLeaderboardData(): Promise<LeaderboardData> {
+  const data = await readData<LeaderboardData>(STORE_KEY);
+  return data ?? {};
 }
 
-function writeLeaderboardData(data: LeaderboardData) {
-  const dir = path.dirname(FILE_PATH);
-
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-
-  fs.writeFileSync(FILE_PATH, JSON.stringify(data, null, 2));
+async function writeLeaderboardData(data: LeaderboardData) {
+  await writeData(STORE_KEY, data);
 }
 
-export function saveLeaderboardMessageId(
+export async function saveLeaderboardMessageId(
   key: LeaderboardKey,
   channelId: string,
   messageId: string
 ) {
-  const data = readLeaderboardData();
-
-  data[key] = {
-    channelId,
-    messageId,
-  };
-
-  writeLeaderboardData(data);
+  const data = await readLeaderboardData();
+  data[key] = { channelId, messageId };
+  await writeLeaderboardData(data);
 }
 
-export function getLeaderboardMessageId(key: LeaderboardKey) {
-  const data = readLeaderboardData();
+export async function getLeaderboardMessageId(key: LeaderboardKey) {
+  const data = await readLeaderboardData();
   return data[key];
 }

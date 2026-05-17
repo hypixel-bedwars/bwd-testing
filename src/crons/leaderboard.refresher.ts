@@ -21,7 +21,7 @@ export async function updateLeaderboards(client: Client) {
   }[] = [];
 
   for (const type of types) {
-    const stored = getLeaderboardMessageId(type.key as any);
+    const stored = await getLeaderboardMessageId(type.key as any);
     if (!stored) continue;
 
     try {

@@ -66,7 +66,7 @@ async function buildStatusComponent() {
 }
 
 export async function updateBedwarsStatus(client: Client) {
-  const data = readBedwarsStatusData();
+  const data = await readBedwarsStatusData();
   if (!data) return;
 
   try {

@@ -76,7 +76,7 @@ export default {
       });
     
       const star_leaderboard_msg_id = star_leaderboard_message.id;
-      saveLeaderboardMessageId("stars", star_leaderboard_channel_id, star_leaderboard_msg_id)
+      await saveLeaderboardMessageId("stars", star_leaderboard_channel_id, star_leaderboard_msg_id)
     }
     
     if (wins_leaderboard_channel && wins_leaderboard_channel.type == ChannelType.GuildText) {
@@ -87,7 +87,7 @@ export default {
       });
       
       const wins_leaderboard_msg_id = wins_leaderboard_message.id;
-      saveLeaderboardMessageId("wins", wins_leaderboard_channel_id, wins_leaderboard_msg_id)
+      await saveLeaderboardMessageId("wins", wins_leaderboard_channel_id, wins_leaderboard_msg_id)
     }
     
     if (fkills_leaderboard_channel && fkills_leaderboard_channel.type == ChannelType.GuildText) {
@@ -98,7 +98,7 @@ export default {
       });
       
       const fkills_leaderboard_msg_id = fkills_leaderboard_message.id;
-      saveLeaderboardMessageId("fkills", fkills_leaderboard_channel_id, fkills_leaderboard_msg_id)
+      await saveLeaderboardMessageId("fkills", fkills_leaderboard_channel_id, fkills_leaderboard_msg_id)
     }
     
     await interaction.editReply({

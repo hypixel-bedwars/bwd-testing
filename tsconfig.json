@@ -6,7 +6,7 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "esModuleInterop": true,
-    "types": ["node"]
+    "types": ["node", "better-sqlite3"]
   },
   "include": ["src/**/*"]
 }

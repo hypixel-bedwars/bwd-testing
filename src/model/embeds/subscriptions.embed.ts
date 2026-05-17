@@ -1,7 +1,6 @@
 import {
   ContainerBuilder,
   SeparatorBuilder,
-  TextDisplayBuilder,
 } from "discord.js";
 
 export function getSubscriptionsEmbed() {

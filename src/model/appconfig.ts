@@ -13,4 +13,9 @@ export default interface AppConfig {
   FkillsLeaderboardChannelId: string;
   BedwarsStatusChannelId: string;
   DiscordLogChannelId: string;
+  
+  TicketsCategoryId: string;
+
+  // Partner role selection menu
+  PartnerUniversalRoleId: string;
 }

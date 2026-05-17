@@ -1,40 +1,28 @@
-import path from "path";
 import { autoResponderData } from "../model/autoresponder.model";
-import fs from "fs";
 import { logger } from "../logger";
+import { readData, writeData } from "./dataReader";
 
-const FILE_PATH = path.join(process.cwd(), "data", "autoresponder.json");
+const FILE_NAME = "autoresponder";
 
-export function getAutoResponderData(): autoResponderData {
-  try {
-    if (!fs.existsSync(FILE_PATH)) return {};
-    return JSON.parse(fs.readFileSync(FILE_PATH, "utf-8"));
-  } catch {
-    logger.warn("Data for auto response corrupted, resetting...");
+export async function getAutoResponderData(): Promise<autoResponderData> {
+  const data = await readData<autoResponderData>(FILE_NAME);
+
+  if (!data) {
+    logger.warn("Auto responder data missing or corrupted, resetting...");
+    // Persist an empty object so we don't warn on every message.
+    await writeData(FILE_NAME, {} as autoResponderData);
     return {};
   }
+
+  return data;
 }
 
-export function addOrUpdateAutoResponder(
+export async function addOrUpdateAutoResponder(
   userId: string,
   username: string,
   response: string
-): { success: boolean; reason?: string } {
-  const dir = path.dirname(FILE_PATH);
-
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-
-  let data: autoResponderData = {};
-
-  if (fs.existsSync(FILE_PATH)) {
-    try {
-      data = JSON.parse(fs.readFileSync(FILE_PATH, "utf-8"));
-    } catch {
-      logger.warn("Corrupted data, resetting...");
-    }
-  }
+): Promise<{ success: boolean; reason?: string }> {
+  const data = await getAutoResponderData();
 
   const normalizedUsername = username.toLowerCase();
 
@@ -54,18 +42,20 @@ export function addOrUpdateAutoResponder(
     response,
   };
 
-  fs.writeFileSync(FILE_PATH, JSON.stringify(data, null, 2));
-  
+  await writeData(FILE_NAME, data);
+
   logger.info("Added or updated auto responder for user %s", username);
   logger.discord(`Added or updated auto responder for user ${username}`);
+
   return { success: true };
 }
 
-export function removeAutoResponseUsername(username: string): boolean {
-  const data = getAutoResponderData();
+export async function removeAutoResponseUsername(
+  username: string
+): Promise<boolean> {
+  const data = await getAutoResponderData();
   const normalizedUsername = username.toLowerCase();
 
-  // Find the ID (key) where the username matches
   const userIdToDelete = Object.keys(data).find(
     (key) => data[key].username.toLowerCase() === normalizedUsername
   );
@@ -74,20 +64,22 @@ export function removeAutoResponseUsername(username: string): boolean {
 
   delete data[userIdToDelete];
 
-  fs.writeFileSync(FILE_PATH, JSON.stringify(data, null, 2));
-  
+  await writeData(FILE_NAME, data);
+
   logger.discord(`Removed auto responder for user ${username}`);
   return true;
 }
 
-export function removeAutoResponderById(userId: string): boolean {
-  const data = getAutoResponderData();
+export async function removeAutoResponderById(
+  userId: string
+): Promise<boolean> {
+  const data = await getAutoResponderData();
 
   if (!(userId in data)) return false;
 
   delete data[userId];
 
-  fs.writeFileSync(FILE_PATH, JSON.stringify(data, null, 2));
+  await writeData(FILE_NAME, data);
 
   return true;
 }

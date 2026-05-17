@@ -2,9 +2,7 @@ import { logger } from "../../logger";
 import { createFontSet, initFontSet } from "./font-set";
 import { srcFontDir } from "./helpers";
 import GlyphProvider from "./models/glyph-provider";
-import JSONGlyphData, {
-  assertValidJSONProvider,
-} from "./models/json-glyph-data";
+import { assertValidJSONProvider } from "./models/json-glyph-data";
 import Provider from "./models/provider";
 import { AnyGlyph } from "./models/renderers";
 import { BitmapGlyph } from "./models/renderers/bitmap-glyph";
@@ -59,6 +57,7 @@ async function getGlyphProvider(
 
   try {
     mod = await import(`./glyph-providers/${type}`);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
     if (e?.code === "ERR_MODULE_NOT_FOUND") {
       log("Missing glyph provider!", Severity.ERROR);
@@ -107,7 +106,7 @@ export async function loadFontSets(): Promise<void> {
         continue;
       }
 
-      let mod = await getGlyphProvider(data.type);
+      const mod = await getGlyphProvider(data.type);
       if (mod === undefined) {
         continue;
       }

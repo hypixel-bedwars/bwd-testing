@@ -1,7 +1,7 @@
 import { logger } from "../logger";
 import { loadFontSets } from "./lib/font-manager";
 import { drawMinecraftText } from "./lib/index";
-import Canvas from "canvas";
+import Canvas from "@napi-rs/canvas";
 import fs from "fs/promises";
 
 const canvas = Canvas.createCanvas(1000, 1000);
@@ -39,7 +39,7 @@ const context = canvas.getContext("2d");
     2
   );
 
-  await fs.writeFile("test-output.png", canvas.toBuffer());
+  await fs.writeFile("test-output.png", canvas.toBuffer("image/png"));
 
   logger.info("✅ Test image saved as test-output.png");
 })();

@@ -23,7 +23,7 @@ function assertHasJSONProviderKeys(
   if (typeof value != "object") throw "value is not an object";
   if (value === null) throw "value is null";
 
-  let missingKeys = ["type", "file", "ascent", "chars"].filter(
+  const missingKeys = ["type", "file", "ascent", "chars"].filter(
     (key) => !(key in value),
   );
 
@@ -40,19 +40,22 @@ const EXPECTED_JSON_KEYS: Array<[string, string]> = [
 function assertKeysMatchJSONProvider(
   obj: JSONGlyphDataKeys,
 ): asserts obj is JSONGlyphData {
-  let invalidTypes: [string, string][] = [];
+  const invalidTypes: [string, string][] = [];
 
   for (const [k, v] of EXPECTED_JSON_KEYS) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (typeof (obj as any)[k] != v) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       invalidTypes.push([k, typeof (obj as any)[k]]);
     }
   }
 
-  let { chars } = obj as any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { chars } = obj as any;
   if (!Array.isArray(chars)) {
     invalidTypes.push(["chars", typeof chars]);
   } else {
-    let types: Set<string> = new Set();
+    const types: Set<string> = new Set();
     for (const obj of chars) {
       types.add(typeof obj);
     }
@@ -63,7 +66,7 @@ function assertKeysMatchJSONProvider(
       if (types.delete("object")) {
         types.add("unknown");
       }
-      let invalid_type = [...types.values()].sort().join(" | ");
+      const invalid_type = [...types.values()].sort().join(" | ");
       invalidTypes.push(["chars", `Array<${invalid_type}>`]);
     }
   }
