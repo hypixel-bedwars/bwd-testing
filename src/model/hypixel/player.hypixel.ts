@@ -329,6 +329,41 @@ const prestigeFormats: Record<number, (level: number, d: string[]) => string> = 
   69: (_, d) => `${MinecraftColor.GREEN}[${MinecraftColor.DARK_GREEN}${d[0]}${MinecraftColor.DARK_GREEN}${d[1]}${MinecraftColor.DARK_GREEN}${d[2]}${MinecraftColor.DARK_GREEN}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_GRAY}]`,
 
   70: (_, d) => `${MinecraftColor.DARK_AQUA}[${MinecraftColor.AQUA}${d[0]}${MinecraftColor.AQUA}${d[1]}${MinecraftColor.AQUA}${d[2]}${MinecraftColor.WHITE}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_AQUA}]`,
+
+  71: (_, d) => `${MinecraftColor.DARK_RED}[${MinecraftColor.RED}${d[0]}${MinecraftColor.GOLD}${d[1]}${MinecraftColor.YELLOW}${d[2]}${MinecraftColor.GOLD}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.YELLOW}]`,
+  72: (_, d) => `${MinecraftColor.DARK_GREEN}[${MinecraftColor.GREEN}${d[0]}${MinecraftColor.WHITE}${d[1]}${MinecraftColor.DARK_GREEN}${d[2]}${MinecraftColor.WHITE}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_GRAY}]`,
+  73: (_, d) => `${MinecraftColor.DARK_GREEN}[${MinecraftColor.DARK_AQUA}${d[0]}${MinecraftColor.AQUA}${d[1]}${MinecraftColor.AQUA}${d[2]}${MinecraftColor.GREEN}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_GREEN}]`,
+  74: (_, d) => `${MinecraftColor.DARK_GRAY}[${MinecraftColor.LIGHT_PURPLE}${d[0]}${MinecraftColor.LIGHT_PURPLE}${d[1]}${MinecraftColor.LIGHT_PURPLE}${d[2]}${MinecraftColor.LIGHT_PURPLE}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_GRAY}]`,
+  75: (_, d) => `${MinecraftColor.GOLD}[${MinecraftColor.DARK_GREEN}${d[0]}${MinecraftColor.DARK_GREEN}${d[1]}${MinecraftColor.DARK_GREEN}${d[2]}${MinecraftColor.WHITE}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.WHITE}]`,
+  76: (_, d) => `${MinecraftColor.WHITE}[${MinecraftColor.GRAY}${d[0]}${MinecraftColor.GRAY}${d[1]}${MinecraftColor.GRAY}${d[2]}${MinecraftColor.RED}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_GRAY}]`,
+  77: (_, d) => `${MinecraftColor.LIGHT_PURPLE}[${MinecraftColor.RED}${d[0]}${MinecraftColor.RED}${d[1]}${MinecraftColor.RED}${d[2]}${MinecraftColor.YELLOW}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.LIGHT_PURPLE}]`,
+  78: (_, d) => `${MinecraftColor.DARK_GRAY}[${MinecraftColor.GRAY}${d[0]}${MinecraftColor.WHITE}${d[1]}${MinecraftColor.WHITE}${d[2]}${MinecraftColor.YELLOW}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_GRAY}]`,
+  79: (_, d) => `${MinecraftColor.GOLD}[${MinecraftColor.WHITE}${d[0]}${MinecraftColor.DARK_GREEN}${d[1]}${MinecraftColor.GOLD}${d[2]}${MinecraftColor.WHITE}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.GOLD}]`,
+
+  80: (_, d) => `${MinecraftColor.DARK_GREEN}[${MinecraftColor.GREEN}${d[0]}${MinecraftColor.RED}${d[1]}${MinecraftColor.RED}${d[2]}${MinecraftColor.DARK_RED}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_GREEN}]`,
+
+  81: (_, d) => `${MinecraftColor.DARK_GRAY}[${MinecraftColor.GRAY}${d[0]}${MinecraftColor.WHITE}${d[1]}${MinecraftColor.AQUA}${d[2]}${MinecraftColor.BLUE}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_BLUE}]`,
+  82: (_, d) => `${MinecraftColor.WHITE}[${MinecraftColor.GREEN}${d[0]}${MinecraftColor.GREEN}${d[1]}${MinecraftColor.GREEN}${d[2]}${MinecraftColor.GREEN}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.WHITE}]`,
+  83: (_, d) => `${MinecraftColor.DARK_GRAY}[${MinecraftColor.DARK_RED}${d[0]}${MinecraftColor.DARK_RED}${d[1]}${MinecraftColor.DARK_RED}${d[2]}${MinecraftColor.RED}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_GRAY}]`,
+  84: (_, d) => `${MinecraftColor.WHITE}[${MinecraftColor.LIGHT_PURPLE}${d[0]}${MinecraftColor.LIGHT_PURPLE}${d[1]}${MinecraftColor.LIGHT_PURPLE}${d[2]}${MinecraftColor.GREEN}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.WHITE}]`,
+  85: (_, d) => `${MinecraftColor.DARK_AQUA}[${MinecraftColor.GOLD}${d[0]}${MinecraftColor.GOLD}${d[1]}${MinecraftColor.GOLD}${d[2]}${MinecraftColor.YELLOW}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_AQUA}]`,
+  86: (_, d) => `${MinecraftColor.LIGHT_PURPLE}[${MinecraftColor.WHITE}${d[0]}${MinecraftColor.WHITE}${d[1]}${MinecraftColor.WHITE}${d[2]}${MinecraftColor.YELLOW}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.LIGHT_PURPLE}]`,
+  87: (_, d) => `${MinecraftColor.DARK_GRAY}[${MinecraftColor.GOLD}${d[0]}${MinecraftColor.GOLD}${d[1]}${MinecraftColor.GOLD}${d[2]}${MinecraftColor.GOLD}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_GRAY}]`,
+  88: (_, d) => `${MinecraftColor.DARK_RED}[${MinecraftColor.RED}${d[0]}${MinecraftColor.RED}${d[1]}${MinecraftColor.RED}${d[2]}${MinecraftColor.WHITE}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.WHITE}]`,
+  89: (_, d) => `${MinecraftColor.BLUE}[${MinecraftColor.AQUA}${d[0]}${MinecraftColor.AQUA}${d[1]}${MinecraftColor.AQUA}${d[2]}${MinecraftColor.DARK_AQUA}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.BLUE}]`,
+
+  90: (_, d) => `${MinecraftColor.LIGHT_PURPLE}[${MinecraftColor.DARK_PURPLE}${d[0]}${MinecraftColor.DARK_PURPLE}${d[1]}${MinecraftColor.DARK_PURPLE}${d[2]}${MinecraftColor.DARK_PURPLE}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_GRAY}]`,
+
+  91: (_, d) => `${MinecraftColor.BLACK}[${MinecraftColor.RED}${d[0]}${MinecraftColor.GOLD}${d[1]}${MinecraftColor.GOLD}${d[2]}${MinecraftColor.RED}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_RED}]`,
+  92: (_, d) => `${MinecraftColor.GREEN}[${MinecraftColor.LIGHT_PURPLE}${d[0]}${MinecraftColor.LIGHT_PURPLE}${d[1]}${MinecraftColor.LIGHT_PURPLE}${d[2]}${MinecraftColor.GREEN}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_GREEN}]`,
+  93: (_, d) => `${MinecraftColor.WHITE}[${MinecraftColor.DARK_GRAY}${d[0]}${MinecraftColor.DARK_GRAY}${d[1]}${MinecraftColor.DARK_GRAY}${d[2]}${MinecraftColor.WHITE}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.WHITE}]`,
+  94: (_, d) => `${MinecraftColor.YELLOW}[${MinecraftColor.GOLD}${d[0]}${MinecraftColor.DARK_RED}${d[1]}${MinecraftColor.DARK_RED}${d[2]}${MinecraftColor.DARK_GRAY}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_GRAY}]`,
+  95: (_, d) => `${MinecraftColor.BLACK}[${MinecraftColor.DARK_GRAY}${d[0]}${MinecraftColor.DARK_GRAY}${d[1]}${MinecraftColor.DARK_GRAY}${d[2]}${MinecraftColor.GRAY}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.WHITE}]`,
+  96: (_, d) => `${MinecraftColor.YELLOW}[${MinecraftColor.BLACK}${d[0]}${MinecraftColor.BLACK}${d[1]}${MinecraftColor.BLACK}${d[2]}${MinecraftColor.YELLOW}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.BLACK}]`,
+  97: (_, d) => `${MinecraftColor.LIGHT_PURPLE}[${MinecraftColor.YELLOW}${d[0]}${MinecraftColor.YELLOW}${d[1]}${MinecraftColor.YELLOW}${d[2]}${MinecraftColor.AQUA}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.YELLOW}]`,
+  98: (_, d) => `${MinecraftColor.BLACK}[${MinecraftColor.DARK_GRAY}${d[0]}${MinecraftColor.DARK_GRAY}${d[1]}${MinecraftColor.DARK_GRAY}${d[2]}${MinecraftColor.DARK_GRAY}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.BLACK}]`,
+  99: (_, d) => `${MinecraftColor.DARK_GRAY}[${MinecraftColor.GRAY}${d[0]}${MinecraftColor.WHITE}${d[1]}${MinecraftColor.WHITE}${d[2]}${MinecraftColor.YELLOW}${d[3]}${MinecraftColor.BOLD}✭${MinecraftColor.WHITE}]`,
+  100: (_, d) => `${MinecraftColor.BLUE}[${MinecraftColor.WHITE}${d[0]}${MinecraftColor.WHITE}${d[1]}${MinecraftColor.WHITE}${d[2]}${MinecraftColor.WHITE}${d[3]}${MinecraftColor.RED}${d[4]}${MinecraftColor.BOLD}✭${MinecraftColor.DARK_RED}]`,
 };
 
 export function formatStars(player: HypixelPlayer) {
