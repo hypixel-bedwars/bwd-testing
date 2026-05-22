@@ -6,16 +6,17 @@ type AcceptFunction = { (style: Style, char: string): void };
 
 export function iterateFormatted(text: string, accept: AcceptFunction) {
   let style: Style = { ...EMPTY_STYLE };
+  const codePoints = Array.from(text);
 
-  for (let index = 0; index < text.length; index++) {
-    const char: string = text[index]!;
+  for (let index = 0; index < codePoints.length; index++) {
+    const char: string = codePoints[index]!;
 
     if (char === "§") {
-      if (++index === text.length) {
+      if (++index === codePoints.length) {
         break;
       }
 
-      const code = text[index]!;
+      const code = codePoints[index]!;
       const formatting = CHAT_FORMATTINGS[code];
 
       if (formatting) {

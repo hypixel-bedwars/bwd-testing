@@ -103,6 +103,11 @@ export async function create({
         index,
         rowIndex,
       );
+
+      if (actualWidth === 0) {
+        continue;
+      }
+
       const visualScale = height / glyphHeight;
       const contentScale = height / actualWidth;
 
