@@ -122,6 +122,7 @@ export async function create({
         advance: Math.trunc(0.5 + actualWidth * scale) + 1,
         ascent,
         boldOffset: ["✫", "✪", "⚝", "✥", "✭"].includes(char) ? 0 : undefined,
+        shadowOffset: char === "✭" ? 0 : undefined,
         render(context, x, y, color) {
           const { offsetX, offsetY, width, height, ascent } = this;
           const bufferCanvas = Canvas.createCanvas(width, height);
