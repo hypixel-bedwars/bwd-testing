@@ -363,7 +363,7 @@ const prestigeFormats: Record<number, (level: number, d: string[]) => string> = 
   97: (_, d) => `${MinecraftColor.LIGHT_PURPLE}[${MinecraftColor.YELLOW}${d[0]}${MinecraftColor.YELLOW}${d[1]}${MinecraftColor.YELLOW}${d[2]}${MinecraftColor.AQUA}${d[3]}${MinecraftColor.BOLD}\u272D${MinecraftColor.YELLOW}]`,
   98: (_, d) => `${MinecraftColor.BLACK}[${MinecraftColor.DARK_GRAY}${d[0]}${MinecraftColor.DARK_GRAY}${d[1]}${MinecraftColor.DARK_GRAY}${d[2]}${MinecraftColor.DARK_GRAY}${d[3]}${MinecraftColor.BOLD}\u272D${MinecraftColor.BLACK}]`,
   99: (_, d) => `${MinecraftColor.DARK_GRAY}[${MinecraftColor.GRAY}${d[0]}${MinecraftColor.WHITE}${d[1]}${MinecraftColor.WHITE}${d[2]}${MinecraftColor.YELLOW}${d[3]}${MinecraftColor.BOLD}\u272D${MinecraftColor.WHITE}]`,
-  100: (_, d) => `${MinecraftColor.BLUE}[${MinecraftColor.WHITE}${d[0]}${MinecraftColor.WHITE}${d[1]}${MinecraftColor.WHITE}${d[2]}${MinecraftColor.WHITE}${d[3]}${MinecraftColor.RED}${d[4]}${MinecraftColor.BOLD}\u272D${MinecraftColor.DARK_RED}]`,
+  100: (_, d) => `${MinecraftColor.BLUE}[${MinecraftColor.AQUA}${d[0]}${MinecraftColor.WHITE}${d[1]}${MinecraftColor.WHITE}${d[2]}${MinecraftColor.WHITE}${d[3]}${MinecraftColor.RED}${d[4]}${MinecraftColor.BOLD}\u272D${MinecraftColor.DARK_RED}]`,
 };
 
 export function formatStars(player: HypixelPlayer) {
